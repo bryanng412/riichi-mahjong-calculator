@@ -19,7 +19,14 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "mrm": "^2.6.2",
     "prettier": "3.4.1",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{ts,tsx,json,js,css,md}": "prettier --write"
   }
 }
