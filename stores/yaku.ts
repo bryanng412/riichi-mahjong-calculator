@@ -2,36 +2,28 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import type {} from '@redux-devtools/extension' // required for devtools typing
 
-type YakuFlags = {
-  isRiichi: boolean
-  isIppatsu: boolean
-  isDoubleRiichi: boolean
-  isMenzenTsumo: boolean
-  isHaiteiHotei: boolean
-  isChankan: boolean
-  isRinshan: boolean
+const initialYakuValues = {
+  isRiichi: false,
+  isIppatsu: false,
+  isDoubleRiichi: false,
+  isMenzenTsumo: false,
+  isHaiteiHotei: false,
+  isChankan: false,
+  isRinshan: false,
 }
 
-type YakuFlagNames = keyof YakuFlags
+type YakuFlagNames = keyof typeof initialYakuValues
 
-type YakuSetter = {
+type YakuActions = {
   toggleYakuFlag: (yakuState: YakuFlagNames) => void
   setYakuFlag: (yakuState: YakuFlagNames, value: boolean) => void
 }
 
-type YakuState = YakuFlags & YakuSetter
-
-export const useYakuStore = create<YakuState>()(
+export const useYakuStore = create<typeof initialYakuValues & YakuActions>()(
   devtools(
     persist(
       set => ({
-        isRiichi: false,
-        isIppatsu: false,
-        isDoubleRiichi: false,
-        isMenzenTsumo: false,
-        isHaiteiHotei: false,
-        isChankan: false,
-        isRinshan: false,
+        ...initialYakuValues,
         toggleYakuFlag: yakuFlagName =>
           set(state => ({ [yakuFlagName]: !state[yakuFlagName] })),
         setYakuFlag: (yakuFlagName, value) =>
