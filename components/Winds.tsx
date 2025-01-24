@@ -14,7 +14,7 @@ const Winds = () => {
       justifyContent="space-around"
       alignItems="center"
       width={['100%', null, '50%']}
-      minHeight={170}
+      minHeight={[50, null, 170]}
     >
       <Tile tileId={roundWind} onClick={roundWindOnClick} />
       <Tile tileId={seatWind} onClick={seatWindOnClick} />

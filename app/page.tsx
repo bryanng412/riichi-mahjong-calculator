@@ -10,10 +10,10 @@ export default function Home() {
   return (
     <VStack padding="2">
       <HandDisplay />
-      <TileGrid />
       <DoraIndicators />
       <Winds />
       {/* <YakuOptions /> */}
+      <TileGrid />
       {/* <CalculationResults /> */}
     </VStack>
   )
