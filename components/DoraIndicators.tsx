@@ -14,7 +14,7 @@ const DoraIndicators = () => {
   return (
     <Flex
       width={['100%', null, '50%']}
-      minHeight={170}
+      minHeight={[50, null, 170]}
       borderWidth="2px"
       borderRadius="sm"
       paddingX="3"

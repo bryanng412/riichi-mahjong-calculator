@@ -38,6 +38,7 @@ const Tile = ({ tileId, onClick }: TileProps) => {
         alt="test"
         width={TILE_WIDTH}
         height={TILE_HEIGHT}
+        draggable="false"
       />
     </Box>
   )

@@ -2,8 +2,10 @@ import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
 
 export enum ActiveField {
-  Hand,
-  Dora,
+  Hand = 'Hand',
+  Dora = 'Dora Indicators',
+  RoundWind = 'Round Wind',
+  SeatWind = 'Seat Wind',
 }
 
 export type ActiveFieldSlice = {

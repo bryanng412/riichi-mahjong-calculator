@@ -1,3 +1,5 @@
+import { Wind } from '@/store/windSlice'
+
 export const MAX_HAND_SIZE = 14
 export const MAX_NUMBER_OF_SINGLE_TILE = 4
 
@@ -34,3 +36,6 @@ export const canAddTile = (tiles: string[], t: string): boolean => {
 
   return tilesUsed < MAX_NUMBER_OF_SINGLE_TILE && !isDoraAlreadyTaken
 }
+
+export const isWindTile = (tile: string): boolean =>
+  Object.values(Wind).includes(tile as Wind)

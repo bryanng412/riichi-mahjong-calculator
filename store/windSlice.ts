@@ -1,11 +1,18 @@
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
 
+export enum Wind {
+  East = '27',
+  South = '28',
+  West = '29',
+  North = '30',
+}
+
 export type WindSlice = {
-  roundWind: string
-  seatWind: string
-  setRoundWind: (w: string) => void
-  setSeatWind: (w: string) => void
+  roundWind: Wind
+  seatWind: Wind
+  setRoundWind: (w: Wind) => void
+  setSeatWind: (w: Wind) => void
 }
 
 export const createWindSlice: StateCreator<
@@ -14,8 +21,8 @@ export const createWindSlice: StateCreator<
   [],
   WindSlice
 > = set => ({
-  roundWind: '27', //east wind tile
-  seatWind: '27',
+  roundWind: Wind.East,
+  seatWind: Wind.East,
   setRoundWind: w => set({ roundWind: w }),
   setSeatWind: w => set({ seatWind: w }),
 })
