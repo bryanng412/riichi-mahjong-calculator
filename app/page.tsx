@@ -1,14 +1,17 @@
 'use client'
 
+import { VStack } from '@chakra-ui/react'
+import TileGrid from '@/components/TileGrid'
+
 export default function Home() {
   return (
-    <div>
+    <VStack paddingX="2">
       {/* <HandDisplay /> */}
       {/* <DoraIndicators /> */}
       {/* <Winds /> */}
       {/* <YakuOptions /> */}
-      {/* <TileGrid /> */}
+      <TileGrid />
       {/* <CalculationResults /> */}
-    </div>
+    </VStack>
   )
 }
