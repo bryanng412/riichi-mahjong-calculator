@@ -1,5 +1,14 @@
 'use client'
 
 export default function Home() {
-  return <div></div>
+  return (
+    <div>
+      {/* <HandDisplay /> */}
+      {/* <DoraIndicators /> */}
+      {/* <Winds /> */}
+      {/* <YakuOptions /> */}
+      {/* <TileGrid /> */}
+      {/* <CalculationResults /> */}
+    </div>
+  )
 }
