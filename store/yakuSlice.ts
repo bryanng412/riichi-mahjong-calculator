@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand'
+import { BoundState } from './boundStore'
 
 const initialYakuValues = {
   isRiichi: false,
@@ -20,7 +21,7 @@ type YakuActions = {
 export type YakuSlice = typeof initialYakuValues & YakuActions
 
 export const createYakuSlice: StateCreator<
-  YakuSlice,
+  BoundState,
   [],
   [],
   YakuSlice
