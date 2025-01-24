@@ -7,6 +7,7 @@ export type DoraSlice = {
   dora: string[]
   addDora: (d: string) => void
   removeDora: (idx: number) => void
+  clearDora: () => void
 }
 
 export const createDoraSlice: StateCreator<
@@ -26,4 +27,5 @@ export const createDoraSlice: StateCreator<
     set(({ dora }) => ({
       dora: dora.filter((_d, i) => i !== idx),
     })),
+  clearDora: () => set(() => ({ dora: [] })),
 })
