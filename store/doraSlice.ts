@@ -4,8 +4,8 @@ import { BoundState } from './boundStore'
 const MAX_DORA_INDICATOR_LENGTH = 8
 
 export type DoraSlice = {
-  dora: number[]
-  addDora: (d: number) => void
+  dora: string[]
+  addDora: (d: string) => void
   removeDora: (idx: number) => void
 }
 

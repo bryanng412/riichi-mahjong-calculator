@@ -2,8 +2,8 @@ import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
 
 export type TileSlice = {
-  tiles: number[]
-  addTile: (t: number) => void
+  tiles: string[]
+  addTile: (t: string) => void
   removeTile: (idx: number) => void
   clearTiles: () => void
 }
