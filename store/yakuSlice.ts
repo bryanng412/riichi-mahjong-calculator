@@ -9,6 +9,7 @@ const initialYakuValues = {
   isHaiteiHotei: false,
   isChankan: false,
   isRinshan: false,
+  isHandOpen: false,
 }
 
 type YakuFlagNames = keyof typeof initialYakuValues
