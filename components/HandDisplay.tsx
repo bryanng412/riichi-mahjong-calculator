@@ -1,12 +1,15 @@
 import { Flex } from '@chakra-ui/react'
 import { useBoundStore } from '@/store/boundStore'
+import { ActiveField } from '@/store/activeFieldSlice'
 import Tile from './Tile'
 
 const HandDisplay = () => {
-  const { tiles, removeTile } = useBoundStore()
+  const { setActiveField, tiles, removeTile } = useBoundStore()
   const getTileOnClick = (i: number) => () => () => {
     removeTile(i)
+    setActiveField(ActiveField.Hand)
   }
+  const displayOnClick = () => setActiveField(ActiveField.Hand)
 
   return (
     <Flex
@@ -19,6 +22,8 @@ const HandDisplay = () => {
       justifyContent="center"
       alignItems="center"
       wrap="wrap"
+      cursor="pointer"
+      onClick={displayOnClick}
     >
       {tiles.map((t, i) => (
         <Tile tileId={t} key={`${t}-${i}`} getOnClick={getTileOnClick(i)} />

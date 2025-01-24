@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
+import { canAddTile } from '@/utils/tiles'
 
 const MAX_DORA_INDICATOR_LENGTH = 8
 
@@ -18,8 +19,9 @@ export const createDoraSlice: StateCreator<
 > = set => ({
   dora: [],
   addDora: d =>
-    set(({ dora }) =>
-      dora.length < MAX_DORA_INDICATOR_LENGTH
+    set(({ dora, tiles }) =>
+      dora.length < MAX_DORA_INDICATOR_LENGTH &&
+      canAddTile([...dora, ...tiles], d)
         ? { dora: [...dora, d] }
         : { dora }
     ),
