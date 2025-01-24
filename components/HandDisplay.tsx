@@ -4,12 +4,16 @@ import { ActiveField } from '@/store/activeFieldSlice'
 import Tile from './Tile'
 
 const HandDisplay = () => {
-  const { setActiveField, tiles, removeTile } = useBoundStore()
+  const { setActiveField, tiles, removeTile, activeField } = useBoundStore()
   const getTileOnClick = (i: number) => () => {
     removeTile(i)
     setActiveField(ActiveField.Hand)
   }
   const displayOnClick = () => setActiveField(ActiveField.Hand)
+  const borderColor =
+    activeField === ActiveField.Hand
+      ? 'colorPalette.focusRing'
+      : 'colorPalette.border'
 
   return (
     <Flex
@@ -24,6 +28,7 @@ const HandDisplay = () => {
       wrap="wrap"
       cursor="pointer"
       onClick={displayOnClick}
+      borderColor={borderColor}
     >
       {tiles.map((t, i) => (
         <Tile tileId={t} key={`${t}-${i}`} onClick={getTileOnClick(i)} />

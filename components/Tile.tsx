@@ -7,9 +7,10 @@ const TILE_HEIGHT = 100
 interface TileProps {
   tileId: string
   onClick?: () => void
+  showBorder?: boolean
 }
 
-const Tile = ({ tileId, onClick }: TileProps) => {
+const Tile = ({ tileId, onClick, showBorder = false }: TileProps) => {
   const imagePath = `/tiles/regular/${tileId}.svg`
 
   const buttonProps: BoxProps = onClick
@@ -17,10 +18,20 @@ const Tile = ({ tileId, onClick }: TileProps) => {
         as: 'button',
         cursor: 'pointer',
         _active: {
-          bg: '#dddfe2',
+          bg: 'colorPalette.subtle',
           transform: 'scale(0.98)',
         },
+        _hover: {
+          bg: 'colorPalette.subtle',
+        },
         onClick,
+      }
+    : {}
+
+  const borderProps = showBorder
+    ? {
+        border: '1px solid',
+        borderColor: 'colorPalette.focusRing',
       }
     : {}
 
@@ -32,6 +43,7 @@ const Tile = ({ tileId, onClick }: TileProps) => {
       padding="2"
       margin="0.5"
       {...buttonProps}
+      {...borderProps}
     >
       <Image
         src={imagePath}

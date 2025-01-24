@@ -4,10 +4,12 @@ import { useBoundStore } from '@/store/boundStore'
 import { ActiveField } from '@/store/activeFieldSlice'
 
 const Winds = () => {
-  const { roundWind, seatWind, setActiveField } = useBoundStore()
+  const { roundWind, seatWind, setActiveField, activeField } = useBoundStore()
 
   const roundWindOnClick = () => setActiveField(ActiveField.RoundWind)
   const seatWindOnClick = () => setActiveField(ActiveField.SeatWind)
+  const showRoundWindBorder = activeField === ActiveField.RoundWind
+  const showSeatWindBorder = activeField === ActiveField.SeatWind
 
   return (
     <Flex
@@ -16,8 +18,16 @@ const Winds = () => {
       width={['100%', null, '50%']}
       minHeight={[50, null, 170]}
     >
-      <Tile tileId={roundWind} onClick={roundWindOnClick} />
-      <Tile tileId={seatWind} onClick={seatWindOnClick} />
+      <Tile
+        tileId={roundWind}
+        onClick={roundWindOnClick}
+        showBorder={showRoundWindBorder}
+      />
+      <Tile
+        tileId={seatWind}
+        onClick={seatWindOnClick}
+        showBorder={showSeatWindBorder}
+      />
     </Flex>
   )
 }
