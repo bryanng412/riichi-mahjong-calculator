@@ -8,8 +8,9 @@ import {
 import merge from 'lodash/merge'
 import { createYakuSlice, YakuSlice } from './yakuSlice'
 import { createDoraSlice, DoraSlice } from './doraSlice'
+import { createTileSlice, TileSlice } from './tileSlice'
 
-export type BoundState = YakuSlice & DoraSlice
+export type BoundState = YakuSlice & DoraSlice & TileSlice
 
 const useBoundStoreBase = create<BoundState>()(
   devtools(
@@ -17,6 +18,7 @@ const useBoundStoreBase = create<BoundState>()(
       immer((...args) => ({
         ...createYakuSlice(...args),
         ...createDoraSlice(...args),
+        ...createTileSlice(...args),
       })),
       {
         name: 'riichi-store',
