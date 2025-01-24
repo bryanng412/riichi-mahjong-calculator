@@ -1,7 +1,20 @@
 export const MAX_HAND_SIZE = 14
 export const MAX_NUMBER_OF_SINGLE_TILE = 4
 
+//Man, Pin, and Sou tiles are 0-27
 export const is5Tile = (tile: number): boolean => tile % 9 === 4 && tile < 27
+
+export const generateAllTiles = (): string[] => {
+  const tiles = []
+  for (let i = 0; i < 34; i++) {
+    tiles.push(i.toString())
+    if (is5Tile(i)) {
+      tiles.push(`${i}-dora`)
+    }
+  }
+
+  return tiles
+}
 
 export const sortTiles = (tiles: string[]) =>
   [...tiles].sort((a, b) => {

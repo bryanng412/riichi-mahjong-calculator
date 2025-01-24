@@ -1,7 +1,6 @@
-import { Fragment } from 'react'
 import { SimpleGrid } from '@chakra-ui/react'
 import Tile from './Tile'
-import { is5Tile } from '@/utils/tiles'
+import { generateAllTiles } from '@/utils/tiles'
 import { useBoundStore } from '@/store/boundStore'
 import { ActiveField } from '@/store/activeFieldSlice'
 
@@ -18,16 +17,13 @@ const TileGrid = () => {
 
   return (
     <SimpleGrid columns={[6, null, 10]}>
-      {[...Array(34).keys()].map(i =>
-        is5Tile(i) ? (
-          <Fragment key={i}>
-            <Tile tileId={i.toString()} getOnClick={getTileOnClick} />
-            <Tile tileId={`${i}-dora`} getOnClick={getTileOnClick} />
-          </Fragment>
-        ) : (
-          <Tile tileId={i.toString()} key={i} getOnClick={getTileOnClick} />
-        )
-      )}
+      {generateAllTiles().map((tileId, i) => (
+        <Tile
+          key={`${tileId}-${i}`}
+          tileId={tileId}
+          onClick={getTileOnClick(tileId)}
+        />
+      ))}
     </SimpleGrid>
   )
 }

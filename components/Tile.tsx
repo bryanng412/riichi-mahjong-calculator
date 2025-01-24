@@ -6,13 +6,13 @@ const TILE_HEIGHT = 100
 
 interface TileProps {
   tileId: string
-  getOnClick?: (tileId: string) => () => void
+  onClick?: () => void
 }
 
-const Tile = ({ tileId, getOnClick }: TileProps) => {
+const Tile = ({ tileId, onClick }: TileProps) => {
   const imagePath = `/tiles/regular/${tileId}.svg`
 
-  const buttonProps: BoxProps = getOnClick
+  const buttonProps: BoxProps = onClick
     ? {
         as: 'button',
         cursor: 'pointer',
@@ -20,7 +20,7 @@ const Tile = ({ tileId, getOnClick }: TileProps) => {
           bg: '#dddfe2',
           transform: 'scale(0.98)',
         },
-        onClick: getOnClick(tileId),
+        onClick,
       }
     : {}
 

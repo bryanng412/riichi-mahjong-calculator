@@ -6,7 +6,7 @@ import Tile from './Tile'
 const DoraIndicators = () => {
   const { setActiveField, dora, removeDora } = useBoundStore()
   const doraDisplayOnClick = () => setActiveField(ActiveField.Dora)
-  const getDoraOnClick = (i: number) => () => () => {
+  const getDoraOnClick = (i: number) => () => {
     removeDora(i)
     setActiveField(ActiveField.Dora)
   }
@@ -26,7 +26,7 @@ const DoraIndicators = () => {
       onClick={doraDisplayOnClick}
     >
       {dora.map((t, i) => (
-        <Tile tileId={t} key={`${t}-${i}`} getOnClick={getDoraOnClick(i)} />
+        <Tile tileId={t} key={`${t}-${i}`} onClick={getDoraOnClick(i)} />
       ))}
     </Flex>
   )

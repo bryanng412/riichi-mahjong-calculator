@@ -5,7 +5,7 @@ import Tile from './Tile'
 
 const HandDisplay = () => {
   const { setActiveField, tiles, removeTile } = useBoundStore()
-  const getTileOnClick = (i: number) => () => () => {
+  const getTileOnClick = (i: number) => () => {
     removeTile(i)
     setActiveField(ActiveField.Hand)
   }
@@ -26,7 +26,7 @@ const HandDisplay = () => {
       onClick={displayOnClick}
     >
       {tiles.map((t, i) => (
-        <Tile tileId={t} key={`${t}-${i}`} getOnClick={getTileOnClick(i)} />
+        <Tile tileId={t} key={`${t}-${i}`} onClick={getTileOnClick(i)} />
       ))}
     </Flex>
   )
