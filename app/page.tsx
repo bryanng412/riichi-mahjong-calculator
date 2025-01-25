@@ -6,6 +6,7 @@ import TileGrid from '@/components/TileGrid'
 import DoraIndicators from '@/components/DoraIndicators'
 import Winds from '@/components/Winds'
 import YakuOptions from '@/components/YakuOptions'
+import CalculationResults from '@/components/CalculationResults'
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
       <Winds />
       <YakuOptions />
       <TileGrid />
-      {/* <CalculationResults /> */}
+      <CalculationResults />
     </VStack>
   )
 }

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 import { createTrackedSelector } from 'react-tracked'
 import merge from 'lodash/merge'
@@ -15,21 +15,23 @@ export type BoundState = YakuSlice &
   WindSlice &
   ActiveFieldSlice
 
-const useBoundStoreBase = create<BoundState>()(
+export const useBoundStoreBase = create<BoundState>()(
   devtools(
-    persist(
-      immer((...args) => ({
-        ...createYakuSlice(...args),
-        ...createDoraSlice(...args),
-        ...createTileSlice(...args),
-        ...createWindSlice(...args),
-        ...createActiveFieldSlice(...args),
-      })),
-      {
-        name: 'riichi-store',
-        merge: (persistedState, currentState) =>
-          merge(currentState, persistedState),
-      }
+    subscribeWithSelector(
+      persist(
+        immer((...args) => ({
+          ...createYakuSlice(...args),
+          ...createDoraSlice(...args),
+          ...createTileSlice(...args),
+          ...createWindSlice(...args),
+          ...createActiveFieldSlice(...args),
+        })),
+        {
+          name: 'riichi-store',
+          merge: (persistedState, currentState) =>
+            merge(currentState, persistedState),
+        }
+      )
     )
   )
 )
