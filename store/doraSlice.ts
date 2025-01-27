@@ -1,8 +1,7 @@
+import { MAX_DORA_INDICATOR_LENGTH } from '@/utils/constants'
 import { canAddTile } from '@/utils/tiles'
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
-
-const MAX_DORA_INDICATOR_LENGTH = 8
 
 export type DoraSlice = {
   dora: string[]

@@ -1,4 +1,5 @@
-import { canAddTile, MAX_HAND_SIZE, sortTiles } from '@/utils/tiles'
+import { HAND_SIZE } from '@/utils/constants'
+import { canAddTile, sortTiles } from '@/utils/tiles'
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
 
@@ -21,7 +22,7 @@ export const createTileSlice: StateCreator<
   winningTile: '',
   addTile: t =>
     set(({ tiles, dora, winningTile }) =>
-      tiles.length < MAX_HAND_SIZE &&
+      tiles.length < HAND_SIZE &&
       canAddTile([...tiles, ...dora, winningTile], t)
         ? { tiles: sortTiles([...tiles, t]) }
         : { tiles: sortTiles(tiles) }

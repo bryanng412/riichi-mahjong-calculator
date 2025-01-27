@@ -1,8 +1,6 @@
+import { TILE_IMAGE_HEIGHT, TILE_IMAGE_WIDTH } from '@/utils/constants'
 import { Box, BoxProps } from '@chakra-ui/react'
 import Image from 'next/image'
-
-const IMAGE_WIDTH = 75
-const IMAGE_HEIGHT = 100
 
 interface TileProps {
   tileId: string
@@ -55,8 +53,8 @@ const Tile = ({
       <Image
         src={imagePath}
         alt="test"
-        width={IMAGE_WIDTH}
-        height={IMAGE_HEIGHT}
+        width={TILE_IMAGE_WIDTH}
+        height={TILE_IMAGE_HEIGHT}
         draggable="false"
       />
     </Box>

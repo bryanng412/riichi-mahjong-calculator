@@ -1,8 +1,8 @@
 import { Wind } from '@/store/windSlice'
-
-export const MAX_HAND_SIZE = 13
-export const MAX_NUMBER_OF_SINGLE_TILE = 4
-export const MAX_NUMBER_OF_5_TILE = 3
+import {
+  MAX_NUMBER_OF_5_TILE,
+  MAX_NUMBER_OF_SINGLE_TILE,
+} from '@/utils/constants'
 
 export const convertStringTileToNumber = (tile: string): number =>
   Number(tile.replace(/[^0-9]/g, ''))
