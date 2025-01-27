@@ -2,22 +2,23 @@ import { Flex } from '@chakra-ui/react'
 import { useBoundStore } from '@/store/boundStore'
 import { ActiveField } from '@/store/activeFieldSlice'
 import Tile from './Tile'
+import WinningTile from './WinningTile'
 
 const HandDisplay = () => {
   const { setActiveField, tiles, removeTile, activeField } = useBoundStore()
-  const getTileOnClick = (i: number) => () => {
+  const getHandTileOnClick = (i: number) => () => {
     removeTile(i)
     setActiveField(ActiveField.Hand)
   }
   const displayOnClick = () => setActiveField(ActiveField.Hand)
-  const borderColor =
+  const handDisplayBorderColor =
     activeField === ActiveField.Hand
       ? 'colorPalette.focusRing'
       : 'colorPalette.border'
 
   return (
     <Flex
-      width={['100%', null, '50%']}
+      width={['100%', null, '55%']}
       minHeight={[50, null, 170]}
       borderWidth="2px"
       borderRadius="sm"
@@ -28,11 +29,12 @@ const HandDisplay = () => {
       wrap="wrap"
       cursor="pointer"
       onClick={displayOnClick}
-      borderColor={borderColor}
+      borderColor={handDisplayBorderColor}
     >
       {tiles.map((t, i) => (
-        <Tile tileId={t} key={`${t}-${i}`} onClick={getTileOnClick(i)} />
+        <Tile tileId={t} key={`${t}-${i}`} onClick={getHandTileOnClick(i)} />
       ))}
+      <WinningTile />
     </Flex>
   )
 }

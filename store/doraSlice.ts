@@ -19,9 +19,9 @@ export const createDoraSlice: StateCreator<
 > = set => ({
   dora: [],
   addDora: d =>
-    set(({ dora, tiles }) =>
+    set(({ dora, tiles, winningTile }) =>
       dora.length < MAX_DORA_INDICATOR_LENGTH &&
-      canAddTile([...dora, ...tiles], d)
+      canAddTile([...dora, ...tiles, winningTile], d)
         ? { dora: [...dora, d] }
         : { dora }
     ),

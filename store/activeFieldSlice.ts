@@ -6,6 +6,7 @@ export enum ActiveField {
   Dora = 'Dora Indicators',
   RoundWind = 'Round Wind',
   SeatWind = 'Seat Wind',
+  WinningTile = 'Winning Tile',
 }
 
 export type ActiveFieldSlice = {

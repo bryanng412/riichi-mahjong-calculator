@@ -6,14 +6,22 @@ import { ActiveField } from '@/store/activeFieldSlice'
 import { Wind } from '@/store/windSlice'
 
 const TileGrid = () => {
-  const { activeField, addTile, addDora, setRoundWind, setSeatWind } =
-    useBoundStore()
+  const {
+    activeField,
+    addTile,
+    addDora,
+    setRoundWind,
+    setSeatWind,
+    setWinningTile,
+  } = useBoundStore()
 
   const getTileOnClick = (tileId: string) => () => {
     if (activeField === ActiveField.Hand) {
       addTile(tileId)
     } else if (activeField === ActiveField.Dora) {
       addDora(tileId)
+    } else if (activeField === ActiveField.WinningTile) {
+      setWinningTile(tileId)
     } else if (isWindTile(tileId)) {
       if (activeField === ActiveField.RoundWind) {
         setRoundWind(tileId as Wind)

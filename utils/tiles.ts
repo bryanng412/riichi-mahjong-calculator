@@ -1,6 +1,6 @@
 import { Wind } from '@/store/windSlice'
 
-export const MAX_HAND_SIZE = 14
+export const MAX_HAND_SIZE = 13
 export const MAX_NUMBER_OF_SINGLE_TILE = 4
 export const MAX_NUMBER_OF_5_TILE = 3
 
@@ -37,10 +37,9 @@ export const sortTiles = (tiles: string[]) =>
   })
 
 export const canAddTile = (tiles: string[], t: string): boolean => {
-  const tilesUsed = tiles.reduce(
-    (count, tile) => (tile === t ? count + 1 : count),
-    0
-  )
+  const tilesUsed = tiles
+    .filter(tile => tile !== '')
+    .reduce((count, tile) => (tile === t ? count + 1 : count), 0)
   const isDoraAlreadyUsed = t.includes('dora')
     ? tiles.some(tile => tile === t)
     : false
