@@ -1,13 +1,13 @@
+import merge from 'lodash/merge'
+import { createTrackedSelector } from 'react-tracked'
 import { create } from 'zustand'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import { createTrackedSelector } from 'react-tracked'
-import merge from 'lodash/merge'
-import { createYakuSlice, YakuSlice } from './yakuSlice'
+import { ActiveFieldSlice, createActiveFieldSlice } from './activeFieldSlice'
 import { createDoraSlice, DoraSlice } from './doraSlice'
 import { createTileSlice, TileSlice } from './tileSlice'
 import { createWindSlice, WindSlice } from './windSlice'
-import { createActiveFieldSlice, ActiveFieldSlice } from './activeFieldSlice'
+import { createYakuSlice, YakuSlice } from './yakuSlice'
 
 export type BoundState = YakuSlice &
   DoraSlice &

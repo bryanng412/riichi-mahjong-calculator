@@ -1,6 +1,6 @@
+import { canAddTile, MAX_HAND_SIZE, sortTiles } from '@/utils/tiles'
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
-import { sortTiles, canAddTile, MAX_HAND_SIZE } from '@/utils/tiles'
 
 export type TileSlice = {
   tiles: string[]

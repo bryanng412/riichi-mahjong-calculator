@@ -1,5 +1,5 @@
-import { useBoundStoreBase, BoundState } from '@/store/boundStore'
-import { useState, useEffect } from 'react'
+import { BoundState, useBoundStoreBase } from '@/store/boundStore'
+import { useEffect, useState } from 'react'
 import { shallow } from 'zustand/shallow'
 
 const HAND_SIZE_THRESHOLD = 14
@@ -7,6 +7,7 @@ const HAND_SIZE_THRESHOLD = 14
 const CalculationResults = () => {
   const initialState = useBoundStoreBase.getState()
   const [calcData, setCalcData] = useState<Partial<BoundState>>(initialState)
+  console.log(calcData)
 
   useEffect(() => {
     const unsubscribe = useBoundStoreBase.subscribe(

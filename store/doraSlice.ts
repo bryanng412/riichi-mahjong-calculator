@@ -1,6 +1,6 @@
+import { canAddTile } from '@/utils/tiles'
 import { StateCreator } from 'zustand'
 import { BoundState } from './boundStore'
-import { canAddTile } from '@/utils/tiles'
 
 const MAX_DORA_INDICATOR_LENGTH = 8
 

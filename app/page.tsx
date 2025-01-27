@@ -1,12 +1,12 @@
 'use client'
 
-import { VStack } from '@chakra-ui/react'
+import CalculationResults from '@/components/CalculationResults'
+import DoraIndicators from '@/components/DoraIndicators'
 import HandDisplay from '@/components/HandDisplay'
 import TileGrid from '@/components/TileGrid'
-import DoraIndicators from '@/components/DoraIndicators'
 import Winds from '@/components/Winds'
 import YakuOptions from '@/components/YakuOptions'
-import CalculationResults from '@/components/CalculationResults'
+import { VStack } from '@chakra-ui/react'
 
 export default function Home() {
   return (

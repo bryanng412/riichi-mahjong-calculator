@@ -1,9 +1,9 @@
+import { ActiveField } from '@/store/activeFieldSlice'
+import { useBoundStore } from '@/store/boundStore'
+import { Wind } from '@/store/windSlice'
+import { generateAllTiles, isWindTile } from '@/utils/tiles'
 import { SimpleGrid } from '@chakra-ui/react'
 import Tile from './Tile'
-import { generateAllTiles, isWindTile } from '@/utils/tiles'
-import { useBoundStore } from '@/store/boundStore'
-import { ActiveField } from '@/store/activeFieldSlice'
-import { Wind } from '@/store/windSlice'
 
 const TileGrid = () => {
   const {

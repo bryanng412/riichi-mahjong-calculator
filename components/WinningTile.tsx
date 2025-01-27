@@ -1,7 +1,7 @@
+import { ActiveField } from '@/store/activeFieldSlice'
+import { useBoundStore } from '@/store/boundStore'
 import { Flex } from '@chakra-ui/react'
 import Tile from './Tile'
-import { useBoundStore } from '@/store/boundStore'
-import { ActiveField } from '@/store/activeFieldSlice'
 
 const WinningTile = () => {
   const { activeField, setActiveField, winningTile, setWinningTile } =
