@@ -1,8 +1,8 @@
 import { Box, BoxProps } from '@chakra-ui/react'
 import Image from 'next/image'
 
-const TILE_WIDTH = 75
-const TILE_HEIGHT = 100
+const IMAGE_WIDTH = 75
+const IMAGE_HEIGHT = 100
 
 interface TileProps {
   tileId: string
@@ -10,7 +10,12 @@ interface TileProps {
   showBorder?: boolean
 }
 
-const Tile = ({ tileId, onClick, showBorder = false }: TileProps) => {
+const Tile = ({
+  tileId,
+  onClick,
+  showBorder = false,
+  ...rest
+}: TileProps & BoxProps) => {
   const imagePath = `/tiles/regular/${tileId}.svg`
 
   const buttonProps: BoxProps = onClick
@@ -37,6 +42,7 @@ const Tile = ({ tileId, onClick, showBorder = false }: TileProps) => {
 
   return (
     <Box
+      width={[65, null, 100]}
       maxW="sm"
       shadow="md"
       borderRadius="lg"
@@ -44,12 +50,13 @@ const Tile = ({ tileId, onClick, showBorder = false }: TileProps) => {
       margin="0.5"
       {...buttonProps}
       {...borderProps}
+      {...rest}
     >
       <Image
         src={imagePath}
         alt="test"
-        width={TILE_WIDTH}
-        height={TILE_HEIGHT}
+        width={IMAGE_WIDTH}
+        height={IMAGE_HEIGHT}
         draggable="false"
       />
     </Box>

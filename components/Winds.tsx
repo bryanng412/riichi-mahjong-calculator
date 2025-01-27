@@ -22,11 +22,13 @@ const Winds = () => {
         tileId={roundWind}
         onClick={roundWindOnClick}
         showBorder={showRoundWindBorder}
+        tabIndex={-1}
       />
       <Tile
         tileId={seatWind}
         onClick={seatWindOnClick}
         showBorder={showSeatWindBorder}
+        tabIndex={-1}
       />
     </Flex>
   )
