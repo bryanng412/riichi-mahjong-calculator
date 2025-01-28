@@ -7,9 +7,10 @@ const WinningTile = () => {
   const { activeField, setActiveField, winningTile, setWinningTile } =
     useBoundStore()
 
-  const getWinningTileOnClick = () => {
+  const getWinningTileOnClick: React.MouseEventHandler<HTMLDivElement> = e => {
+    e.stopPropagation()
     setWinningTile('')
-    setActiveField(ActiveField.WinningTile)
+    setActiveField(ActiveField.Hand)
   }
   const winningTileDisplayOnClick: React.MouseEventHandler<
     HTMLDivElement

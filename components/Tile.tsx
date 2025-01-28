@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 interface TileProps {
   tileId: string
-  onClick?: () => void
+  onClick?: React.MouseEventHandler<HTMLDivElement>
   showBorder?: boolean
 }
 
