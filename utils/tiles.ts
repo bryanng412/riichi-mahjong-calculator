@@ -140,7 +140,6 @@ export const calculateHand = (state: BoundState) => {
     true
   )
 
-  hand.calcDora()
   hand.disableDoubleyakuman()
   hand.disableHairi()
 

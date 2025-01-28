@@ -9,15 +9,7 @@ interface CalculationsProps {
 const Calculations = ({ calcData }: CalculationsProps) => {
   const riichiResult = calculateHand(calcData)
 
-  return (
-    !riichiResult.error && (
-      <div>
-        {Math.random()}
-        HAN
-        {riichiResult.han}
-      </div>
-    )
-  )
+  return !riichiResult.error && <div></div>
 }
 
 export default memo(Calculations)

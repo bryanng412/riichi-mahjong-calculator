@@ -1,4 +1,4 @@
-import { BoundState, useBoundStoreBase } from '@/store/boundStore'
+import { useBoundStore, useBoundStoreBase } from '@/store/boundStore'
 import { HAND_SIZE } from '@/utils/constants'
 import { Spinner } from '@chakra-ui/react'
 import { lazy, Suspense, useDeferredValue, useEffect, useState } from 'react'
@@ -6,9 +6,11 @@ import { shallow } from 'zustand/shallow'
 const Calculations = lazy(() => import('./Calculations'))
 
 const CalculationsContainer = () => {
-  const initialState = useBoundStoreBase.getState()
-  const [calcData, setCalcData] = useState<BoundState | null>(initialState)
-  const deferredCalcData = useDeferredValue(calcData)
+  const boundState = useBoundStore()
+  const shouldShowCalcDataOnMount =
+    boundState.tiles.length === HAND_SIZE && boundState.winningTile !== ''
+  const [showCalcData, setShowCalcData] = useState(shouldShowCalcDataOnMount)
+  const deferredCalcData = useDeferredValue(boundState)
 
   useEffect(() => {
     const unsubscribe = useBoundStoreBase.subscribe(
@@ -22,14 +24,21 @@ const CalculationsContainer = () => {
           currentState.tiles.length === HAND_SIZE &&
           prevState.winningTile === '' &&
           currentState.winningTile !== ''
+        const isWinningTileChanging =
+          currentState.winningTile !== '' &&
+          prevState.winningTile !== currentState.winningTile
 
         const isRemovingTileFromHand = currentState.tiles.length < HAND_SIZE
         const isRemovingWinningTile = currentState.winningTile === ''
 
-        if (isLastTileToHand || isLastTileWinningTile) {
-          setCalcData(currentState)
+        if (
+          isLastTileToHand ||
+          isLastTileWinningTile ||
+          isWinningTileChanging
+        ) {
+          setShowCalcData(true)
         } else if (isRemovingTileFromHand || isRemovingWinningTile) {
-          setCalcData(null)
+          setShowCalcData(false)
         }
       },
       {
@@ -42,7 +51,7 @@ const CalculationsContainer = () => {
   }, [])
 
   return (
-    deferredCalcData && (
+    showCalcData && (
       <Suspense fallback={<Spinner />}>
         <Calculations calcData={deferredCalcData} />
       </Suspense>
