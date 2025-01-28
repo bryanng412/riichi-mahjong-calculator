@@ -17,11 +17,11 @@ const Winds = () => {
     >
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
         <Text textWrap="nowrap">Round Wind</Text>
-        <Tile tileId={roundWind} onClick={roundWindOnClick} tabIndex={-1} />
+        <Tile tileId={roundWind} onClick={roundWindOnClick} />
       </Flex>
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
         <Text textWrap="nowrap">Seat Wind</Text>
-        <Tile tileId={seatWind} onClick={seatWindOnClick} tabIndex={-1} />
+        <Tile tileId={seatWind} onClick={seatWindOnClick} />
       </Flex>
     </Flex>
   )

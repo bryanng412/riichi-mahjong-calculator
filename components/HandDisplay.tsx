@@ -12,7 +12,9 @@ const HandDisplay = () => {
   }
   const displayOnClick = () => setActiveField(ActiveField.Hand)
   const handDisplayBorderColor =
-    activeField === ActiveField.Hand ? 'secondary' : 'border'
+    activeField === ActiveField.Hand
+      ? 'colorPalette.focusRing'
+      : 'colorPalette.border'
 
   return (
     <Flex

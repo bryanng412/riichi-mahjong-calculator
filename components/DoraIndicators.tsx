@@ -10,7 +10,10 @@ const DoraIndicators = () => {
     removeDora(i)
     setActiveField(ActiveField.Dora)
   }
-  const borderColor = activeField === ActiveField.Dora ? 'secondary' : 'border'
+  const borderColor =
+    activeField === ActiveField.Dora
+      ? 'colorPalette.focusRing'
+      : 'colorPalette.border'
 
   return (
     <Flex
