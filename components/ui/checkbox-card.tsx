@@ -30,7 +30,7 @@ export const CheckboxCard = React.forwardRef<
   const ContentWrapper = indicator ? ChakraCheckboxCard.Content : React.Fragment
 
   return (
-    <ChakraCheckboxCard.Root {...rest} padding={2}>
+    <ChakraCheckboxCard.Root {...rest} padding={2} cursor="pointer">
       <ChakraCheckboxCard.HiddenInput ref={ref} {...inputProps} />
       <ChakraCheckboxCard.Control>
         {indicatorPlacement === 'start' && indicator}

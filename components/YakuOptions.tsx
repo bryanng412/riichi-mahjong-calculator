@@ -10,7 +10,7 @@ const YakuOptions = () => {
     isHandOpen,
     isHaiteiHotei,
     isRinshan,
-    toggleYakuFlag,
+    setYakuFlag,
   } = useBoundStore()
 
   return (
@@ -18,32 +18,65 @@ const YakuOptions = () => {
       <CheckboxCard
         label="Riichi"
         checked={isRiichi}
-        onChange={() => toggleYakuFlag('isRiichi')}
+        inputProps={{
+          onClick: () => {
+            if (isHandOpen) {
+              setYakuFlag('isHandOpen', false)
+            }
+            setYakuFlag('isRiichi', !isRiichi)
+          },
+        }}
       />
       <CheckboxCard
         label="Ippatsu"
         checked={isIppatsu}
-        onChange={() => toggleYakuFlag('isIppatsu')}
+        inputProps={{
+          onClick: () => {
+            if (!isRiichi && !isIppatsu) {
+              setYakuFlag('isRiichi', true)
+            }
+            if (isHandOpen) {
+              setYakuFlag('isHandOpen', false)
+            }
+            setYakuFlag('isIppatsu', !isIppatsu)
+          },
+        }}
       />
       <CheckboxCard
         label="Tsumo"
         checked={isMenzenTsumo}
-        onChange={() => toggleYakuFlag('isMenzenTsumo')}
+        inputProps={{
+          onClick: () => setYakuFlag('isMenzenTsumo', !isMenzenTsumo),
+        }}
       />
       <CheckboxCard
         label="Hand Open"
         checked={isHandOpen}
-        onChange={() => toggleYakuFlag('isHandOpen')}
+        inputProps={{
+          onClick: () => {
+            if (isRiichi) {
+              setYakuFlag('isRiichi', false)
+            }
+            if (isIppatsu) {
+              setYakuFlag('isIppatsu', false)
+            }
+            setYakuFlag('isHandOpen', !isHandOpen)
+          },
+        }}
       />
       <CheckboxCard
         label="Haitei/Hotei"
         checked={isHaiteiHotei}
-        onChange={() => toggleYakuFlag('isHaiteiHotei')}
+        inputProps={{
+          onClick: () => setYakuFlag('isHaiteiHotei', !isHaiteiHotei),
+        }}
       />
       <CheckboxCard
         label="Rinshan/Chankan"
         checked={isRinshan}
-        onChange={() => toggleYakuFlag('isRinshan')}
+        inputProps={{
+          onClick: () => setYakuFlag('isRinshan', !isRinshan),
+        }}
       />
     </Flex>
   )
