@@ -32,6 +32,7 @@ export const useBoundStoreBase = create<BoundState>()(
         })),
         {
           name: 'riichi-store',
+          skipHydration: true,
           partialize: state => ({ ...state, activeField: ActiveField.Hand }),
           merge: (persistedState, currentState) =>
             merge(currentState, persistedState),
