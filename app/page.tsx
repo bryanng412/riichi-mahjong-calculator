@@ -1,6 +1,6 @@
 'use client'
 
-import CalculationResults from '@/components/CalculationResults'
+import CalculationsContainer from '@/components/CalculationsContainer'
 import DoraIndicators from '@/components/DoraIndicators'
 import HandDisplay from '@/components/HandDisplay'
 import TileGrid from '@/components/TileGrid'
@@ -16,7 +16,7 @@ export default function Home() {
       <Winds />
       <YakuOptions />
       <TileGrid />
-      <CalculationResults />
+      <CalculationsContainer />
     </VStack>
   )
 }

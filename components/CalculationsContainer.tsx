@@ -1,11 +1,14 @@
 import { BoundState, useBoundStoreBase } from '@/store/boundStore'
 import { HAND_SIZE } from '@/utils/constants'
-import { useEffect, useState } from 'react'
+import { Spinner } from '@chakra-ui/react'
+import { lazy, Suspense, useDeferredValue, useEffect, useState } from 'react'
 import { shallow } from 'zustand/shallow'
+const Calculations = lazy(() => import('./Calculations'))
 
-const CalculationResults = () => {
+const CalculationsContainer = () => {
   const initialState = useBoundStoreBase.getState()
-  const [calcData, setCalcData] = useState<Partial<BoundState>>(initialState)
+  const [calcData, setCalcData] = useState<BoundState | null>(initialState)
+  const deferredCalcData = useDeferredValue(calcData)
 
   useEffect(() => {
     const unsubscribe = useBoundStoreBase.subscribe(
@@ -26,7 +29,7 @@ const CalculationResults = () => {
         if (isLastTileToHand || isLastTileWinningTile) {
           setCalcData(currentState)
         } else if (isRemovingTileFromHand || isRemovingWinningTile) {
-          setCalcData({})
+          setCalcData(null)
         }
       },
       {
@@ -38,7 +41,13 @@ const CalculationResults = () => {
     return unsubscribe
   }, [])
 
-  return <div></div>
+  return (
+    deferredCalcData && (
+      <Suspense fallback={<Spinner />}>
+        <Calculations calcData={deferredCalcData} />
+      </Suspense>
+    )
+  )
 }
 
-export default CalculationResults
+export default CalculationsContainer
