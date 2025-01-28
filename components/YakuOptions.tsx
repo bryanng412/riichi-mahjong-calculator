@@ -8,9 +8,7 @@ const YakuOptions = () => {
     isIppatsu,
     isMenzenTsumo,
     isHandOpen,
-    isDoubleRiichi,
     isHaiteiHotei,
-    isChankan,
     isRinshan,
     toggleYakuFlag,
   } = useBoundStore()
@@ -28,7 +26,7 @@ const YakuOptions = () => {
         onChange={() => toggleYakuFlag('isIppatsu')}
       />
       <CheckboxCard
-        label="Menzen Tsumo"
+        label="Tsumo"
         checked={isMenzenTsumo}
         onChange={() => toggleYakuFlag('isMenzenTsumo')}
       />
@@ -38,22 +36,12 @@ const YakuOptions = () => {
         onChange={() => toggleYakuFlag('isHandOpen')}
       />
       <CheckboxCard
-        label="Double Riichi"
-        checked={isDoubleRiichi}
-        onChange={() => toggleYakuFlag('isDoubleRiichi')}
-      />
-      <CheckboxCard
         label="Haitei/Hotei"
         checked={isHaiteiHotei}
         onChange={() => toggleYakuFlag('isHaiteiHotei')}
       />
       <CheckboxCard
-        label="Chankan"
-        checked={isChankan}
-        onChange={() => toggleYakuFlag('isChankan')}
-      />
-      <CheckboxCard
-        label="Rinshan Kaihou"
+        label="Rinshan/Chankan"
         checked={isRinshan}
         onChange={() => toggleYakuFlag('isRinshan')}
       />
