@@ -1,5 +1,5 @@
 import { BoundState, useBoundStoreBase } from '@/store/boundStore'
-import { CALC_HAND_SIZE_THRESHOLD } from '@/utils/constants'
+import { HAND_SIZE } from '@/utils/constants'
 import { useEffect, useState } from 'react'
 import { shallow } from 'zustand/shallow'
 
@@ -11,15 +11,21 @@ const CalculationResults = () => {
     const unsubscribe = useBoundStoreBase.subscribe(
       state => state,
       (currentState, prevState) => {
-        if (
-          prevState.tiles.length < CALC_HAND_SIZE_THRESHOLD &&
-          currentState.tiles.length >= CALC_HAND_SIZE_THRESHOLD
-        ) {
+        const isLastTileToHand =
+          prevState.tiles.length < HAND_SIZE &&
+          currentState.tiles.length === HAND_SIZE &&
+          currentState.winningTile !== ''
+        const isLastTileWinningTile =
+          currentState.tiles.length === HAND_SIZE &&
+          prevState.winningTile === '' &&
+          currentState.winningTile !== ''
+
+        const isRemovingTileFromHand = currentState.tiles.length < HAND_SIZE
+        const isRemovingWinningTile = currentState.winningTile === ''
+
+        if (isLastTileToHand || isLastTileWinningTile) {
           setCalcData(currentState)
-        } else if (
-          prevState.tiles.length >= CALC_HAND_SIZE_THRESHOLD &&
-          currentState.tiles.length < CALC_HAND_SIZE_THRESHOLD
-        ) {
+        } else if (isRemovingTileFromHand || isRemovingWinningTile) {
           setCalcData({})
         }
       },
