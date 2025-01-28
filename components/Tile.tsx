@@ -34,7 +34,7 @@ const Tile = ({
   const borderProps = showBorder
     ? {
         border: '1px solid',
-        borderColor: 'colorPalette.focusRing',
+        borderColor: 'secondary',
       }
     : {}
 
@@ -46,6 +46,7 @@ const Tile = ({
       borderRadius="lg"
       padding="2"
       margin="0.5"
+      backgroundColor="bg"
       {...buttonProps}
       {...borderProps}
       {...rest}

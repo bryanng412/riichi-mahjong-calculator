@@ -10,10 +10,7 @@ const DoraIndicators = () => {
     removeDora(i)
     setActiveField(ActiveField.Dora)
   }
-  const borderColor =
-    activeField === ActiveField.Dora
-      ? 'colorPalette.focusRing'
-      : 'colorPalette.border'
+  const borderColor = activeField === ActiveField.Dora ? 'secondary' : 'border'
 
   return (
     <Flex
@@ -24,7 +21,7 @@ const DoraIndicators = () => {
     >
       <Text>Dora Indicators</Text>
       <Flex
-        backgroundColor="white"
+        backgroundColor="bg"
         width="100%"
         minHeight={[100, null, 170]}
         borderWidth="2px"
