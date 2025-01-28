@@ -53,10 +53,15 @@ export const canAddTile = (tiles: string[], t: string): boolean => {
 }
 
 export const isWindTile = (tile: string): boolean =>
-  Object.values(Wind).includes(tile as Wind)
+  ['27', '28', '29', '30'].includes(tile)
 
 export const countAkaDora = (tiles: string[]): number =>
   tiles.reduce((count, t) => (t.includes('dora') ? count + 1 : count), 0)
+
+export const getNextWind = (w: Wind): Wind => {
+  const nextWind = getDoraFromIndicators([w])[0]
+  return nextWind.toString() as Wind
+}
 
 export const getDoraFromIndicators = (indicatorTiles: string[]): number[] => {
   const getNextTile = (tile: number) => {

@@ -1,15 +1,12 @@
-import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
+import { getNextWind } from '@/utils/tiles'
 import { Flex, Text } from '@chakra-ui/react'
 import Tile from './Tile'
 
 const Winds = () => {
-  const { roundWind, seatWind, setActiveField, activeField } = useBoundStore()
-
-  const roundWindOnClick = () => setActiveField(ActiveField.RoundWind)
-  const seatWindOnClick = () => setActiveField(ActiveField.SeatWind)
-  const showRoundWindBorder = activeField === ActiveField.RoundWind
-  const showSeatWindBorder = activeField === ActiveField.SeatWind
+  const { roundWind, seatWind, setRoundWind, setSeatWind } = useBoundStore()
+  const roundWindOnClick = () => setRoundWind(getNextWind(roundWind))
+  const seatWindOnClick = () => setSeatWind(getNextWind(seatWind))
 
   return (
     <Flex
@@ -20,21 +17,11 @@ const Winds = () => {
     >
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
         <Text textWrap="nowrap">Round Wind</Text>
-        <Tile
-          tileId={roundWind}
-          onClick={roundWindOnClick}
-          showBorder={showRoundWindBorder}
-          tabIndex={-1}
-        />
+        <Tile tileId={roundWind} onClick={roundWindOnClick} tabIndex={-1} />
       </Flex>
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
         <Text textWrap="nowrap">Seat Wind</Text>
-        <Tile
-          tileId={seatWind}
-          onClick={seatWindOnClick}
-          showBorder={showSeatWindBorder}
-          tabIndex={-1}
-        />
+        <Tile tileId={seatWind} onClick={seatWindOnClick} tabIndex={-1} />
       </Flex>
     </Flex>
   )

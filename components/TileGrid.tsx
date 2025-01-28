@@ -1,19 +1,11 @@
 import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
-import { Wind } from '@/store/windSlice'
-import { generateAllTiles, isWindTile } from '@/utils/tiles'
+import { generateAllTiles } from '@/utils/tiles'
 import { SimpleGrid } from '@chakra-ui/react'
 import Tile from './Tile'
 
 const TileGrid = () => {
-  const {
-    activeField,
-    addTile,
-    addDora,
-    setRoundWind,
-    setSeatWind,
-    setWinningTile,
-  } = useBoundStore()
+  const { activeField, addTile, addDora, setWinningTile } = useBoundStore()
 
   const getTileOnClick = (tileId: string) => () => {
     if (activeField === ActiveField.Hand) {
@@ -22,12 +14,6 @@ const TileGrid = () => {
       addDora(tileId)
     } else if (activeField === ActiveField.WinningTile) {
       setWinningTile(tileId)
-    } else if (isWindTile(tileId)) {
-      if (activeField === ActiveField.RoundWind) {
-        setRoundWind(tileId as Wind)
-      } else if (activeField === ActiveField.SeatWind) {
-        setSeatWind(tileId as Wind)
-      }
     }
   }
 
