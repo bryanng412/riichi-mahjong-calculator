@@ -16,7 +16,7 @@ const Winds = () => {
       justifyContent="space-around"
       alignItems="center"
       width={['100%', null, '50%']}
-      minHeight={[50, null, 170]}
+      minHeight="auto"
     >
       <Flex justifyContent="center" alignItems="center" flexDirection="column">
         <Text textWrap="nowrap">Round Wind</Text>

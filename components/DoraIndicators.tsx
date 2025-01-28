@@ -17,27 +17,31 @@ const DoraIndicators = () => {
 
   return (
     <Flex
-      width={['100%', null, '50%']}
-      minHeight={[50, null, 170]}
-      borderWidth="2px"
-      borderRadius="sm"
-      paddingX="3"
-      paddingY="3"
-      marginTop="6"
+      flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      wrap="wrap"
-      cursor="pointer"
-      onClick={doraDisplayOnClick}
-      borderColor={borderColor}
-      position="relative"
+      minWidth={['100%', null, '65%']}
     >
-      <Text position="absolute" top="-7">
-        Dora Indicators
-      </Text>
-      {dora.map((t, i) => (
-        <Tile tileId={t} key={`${t}-${i}`} onClick={getDoraOnClick(i)} />
-      ))}
+      <Text>Dora Indicators</Text>
+      <Flex
+        backgroundColor="white"
+        width="100%"
+        minHeight={[100, null, 170]}
+        borderWidth="2px"
+        borderRadius="sm"
+        paddingX="3"
+        paddingY="3"
+        justifyContent="center"
+        alignItems="center"
+        wrap="wrap"
+        cursor="pointer"
+        onClick={doraDisplayOnClick}
+        borderColor={borderColor}
+      >
+        {dora.map((t, i) => (
+          <Tile tileId={t} key={`${t}-${i}`} onClick={getDoraOnClick(i)} />
+        ))}
+      </Flex>
     </Flex>
   )
 }

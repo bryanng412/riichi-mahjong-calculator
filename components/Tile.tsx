@@ -52,7 +52,7 @@ const Tile = ({
     >
       <Image
         src={imagePath}
-        alt="test"
+        alt="tile"
         width={TILE_IMAGE_WIDTH}
         height={TILE_IMAGE_HEIGHT}
         draggable="false"
