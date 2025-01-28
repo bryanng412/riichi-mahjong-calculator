@@ -3,7 +3,11 @@ import { createTrackedSelector } from 'react-tracked'
 import { create } from 'zustand'
 import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
-import { ActiveFieldSlice, createActiveFieldSlice } from './activeFieldSlice'
+import {
+  ActiveField,
+  ActiveFieldSlice,
+  createActiveFieldSlice,
+} from './activeFieldSlice'
 import { createDoraSlice, DoraSlice } from './doraSlice'
 import { createTileSlice, TileSlice } from './tileSlice'
 import { createWindSlice, WindSlice } from './windSlice'
@@ -28,6 +32,7 @@ export const useBoundStoreBase = create<BoundState>()(
         })),
         {
           name: 'riichi-store',
+          partialize: state => ({ ...state, activeField: ActiveField.Hand }),
           merge: (persistedState, currentState) =>
             merge(currentState, persistedState),
         }
