@@ -60,35 +60,37 @@ export const countAkaDora = (tiles: string[]): number =>
 
 export const getDoraFromIndicators = (indicatorTiles: string[]): number[] => {
   const getNextTile = (tile: number) => {
-    if (tile >= 0 && tile <= 8) {
-      // Man suit (0-8)
-      return tile + 1 // Next tile in the man suit
-    } else if (tile >= 9 && tile <= 17) {
+    // Man suit (0-8)
+    if (tile >= 0 && tile < 8) {
+      return tile + 1
+    } else if (tile === 8) {
+      return 0
+
       // Pin suit (9-17)
+    } else if (tile >= 9 && tile < 17) {
       return tile + 1
-    } else if (tile >= 18 && tile <= 26) {
+    } else if (tile === 17) {
+      return 9
+
       // Sou suit (18-26)
+    } else if (tile >= 18 && tile < 26) {
       return tile + 1
-    } else if (tile === 27) {
-      // East wind
-      return 28 // South wind
-    } else if (tile === 28) {
-      // South wind
-      return 29 // West wind
-    } else if (tile === 29) {
-      // West wind
-      return 30 // North wind
+    } else if (tile === 26) {
+      return 18
+
+      // Winds
+    } else if (tile >= 27 && tile < 30) {
+      return tile + 1
     } else if (tile === 30) {
-      // North wind
-      return null // No valid next wind
-    } else if (tile === 31) {
-      // White dragon
-      return 32 // Green dragon
-    } else if (tile === 32) {
-      // Green dragon
-      return 33 // Red dragon
+      return 27
+
+      // Dragons
+    } else if (tile >= 31 && tile < 33) {
+      return tile + 1
+    } else if (tile === 33) {
+      return 31
     } else {
-      return null // No valid next tile
+      return null
     }
   }
 
@@ -96,6 +98,19 @@ export const getDoraFromIndicators = (indicatorTiles: string[]): number[] => {
     .map(convertStringTileToNumber)
     .map(getNextTile)
     .filter(t => t !== null)
+}
+
+export const numberToPrefix = (n: number) => {
+  const prefixes = [
+    'Single',
+    'Double',
+    'Triple',
+    'Quadruple',
+    'Quintuple',
+    'Sextuple',
+  ]
+
+  return prefixes[n - 1] || `(${n}-tuple)`
 }
 
 export const calculateHand = (state: BoundState) => {
@@ -114,11 +129,14 @@ export const calculateHand = (state: BoundState) => {
     isRinshan,
   } = state
   const closedHand = tiles.map(convertStringTileToNumber)
-  const ronTile = isMenzenTsumo
-    ? undefined
-    : convertStringTileToNumber(winningTile)
   const akaDoraInHand = countAkaDora([...tiles, winningTile])
   const doraInHand = getDoraFromIndicators(dora)
+  const winningTileNum = convertStringTileToNumber(winningTile)
+  const ronTile = isMenzenTsumo ? undefined : winningTileNum
+
+  if (isMenzenTsumo) {
+    closedHand.push(winningTileNum)
+  }
 
   const hand = new Riichi(
     closedHand,
@@ -140,7 +158,6 @@ export const calculateHand = (state: BoundState) => {
     true
   )
 
-  hand.disableDoubleyakuman()
   hand.disableHairi()
 
   return hand.calc()
