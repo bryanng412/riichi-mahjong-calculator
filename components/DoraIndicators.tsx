@@ -1,6 +1,6 @@
 import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import Tile from './Tile'
 
 const DoraIndicators = () => {
@@ -23,13 +23,18 @@ const DoraIndicators = () => {
       borderRadius="sm"
       paddingX="3"
       paddingY="3"
+      marginTop="6"
       justifyContent="center"
       alignItems="center"
       wrap="wrap"
       cursor="pointer"
       onClick={doraDisplayOnClick}
       borderColor={borderColor}
+      position="relative"
     >
+      <Text position="absolute" top="-7">
+        Dora Indicators
+      </Text>
       {dora.map((t, i) => (
         <Tile tileId={t} key={`${t}-${i}`} onClick={getDoraOnClick(i)} />
       ))}

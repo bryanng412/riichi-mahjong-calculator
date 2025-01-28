@@ -10,7 +10,7 @@ import { VStack } from '@chakra-ui/react'
 
 export default function Home() {
   return (
-    <VStack padding="2">
+    <VStack padding="2" height="100vh" overflow="visible">
       <HandDisplay />
       <DoraIndicators />
       <Winds />

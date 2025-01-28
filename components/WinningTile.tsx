@@ -34,6 +34,7 @@ const WinningTile = () => {
       cursor="pointer"
       margin="1"
       padding="3"
+      position="relative"
     >
       {winningTile !== '' && (
         <Tile tileId={winningTile} onClick={getWinningTileOnClick} />

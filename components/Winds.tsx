@@ -1,6 +1,6 @@
 import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
-import { Flex } from '@chakra-ui/react'
+import { Flex, Text } from '@chakra-ui/react'
 import Tile from './Tile'
 
 const Winds = () => {
@@ -18,18 +18,24 @@ const Winds = () => {
       width={['100%', null, '50%']}
       minHeight={[50, null, 170]}
     >
-      <Tile
-        tileId={roundWind}
-        onClick={roundWindOnClick}
-        showBorder={showRoundWindBorder}
-        tabIndex={-1}
-      />
-      <Tile
-        tileId={seatWind}
-        onClick={seatWindOnClick}
-        showBorder={showSeatWindBorder}
-        tabIndex={-1}
-      />
+      <Flex justifyContent="center" alignItems="center" flexDirection="column">
+        <Text textWrap="nowrap">Round Wind</Text>
+        <Tile
+          tileId={roundWind}
+          onClick={roundWindOnClick}
+          showBorder={showRoundWindBorder}
+          tabIndex={-1}
+        />
+      </Flex>
+      <Flex justifyContent="center" alignItems="center" flexDirection="column">
+        <Text textWrap="nowrap">Seat Wind</Text>
+        <Tile
+          tileId={seatWind}
+          onClick={seatWindOnClick}
+          showBorder={showSeatWindBorder}
+          tabIndex={-1}
+        />
+      </Flex>
     </Flex>
   )
 }
