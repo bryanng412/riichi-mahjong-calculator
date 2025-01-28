@@ -25,15 +25,15 @@ const WinningTile = () => {
 
   return (
     <Flex
-      width={[65, null, 145]}
-      minHeight={[50, null, 170]}
+      width={[85, null, 145]}
+      minHeight={['90px', null, 170]}
       borderWidth="2px"
       borderRadius="lg"
       borderColor={winningTileBorderColor}
       onClick={winningTileDisplayOnClick}
       cursor="pointer"
-      margin="1"
-      padding="3"
+      margin={[0, null, 1]}
+      padding={[2, null, 3]}
       position="relative"
     >
       {winningTile !== '' && (
