@@ -5,7 +5,7 @@ const initialYakuValues = {
   isRiichi: false,
   isIppatsu: false,
   isDoubleRiichi: false,
-  isMenzenTsumo: false,
+  isTsumo: false,
   isHaiteiHotei: false,
   isChankan: false,
   isRinshan: false,
