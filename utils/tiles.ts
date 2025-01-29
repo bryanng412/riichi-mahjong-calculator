@@ -118,6 +118,134 @@ export const numberToPrefix = (n: number) => {
   return prefixes[n - 1] || `(${n}-tuple)`
 }
 
+type TileFrequency = { [tile: number]: number }
+
+export const getTileFrequencyKeys = (
+  tileFrequency: TileFrequency
+): number[] => {
+  return Object.keys(tileFrequency)
+    .map(Number)
+    .sort((a, b) => a - b)
+}
+
+export const isValidChi = (possibleChi: [number, number, number]): boolean => {
+  const isNumberTile = possibleChi.every(t => t >= 0 && t <= 26)
+  if (!isNumberTile) {
+    return false
+  }
+
+  const sortedTiles = possibleChi.sort((a, b) => a - b)
+  return (
+    sortedTiles[1] - sortedTiles[0] === 1 &&
+    sortedTiles[2] - sortedTiles[1] === 1
+  )
+}
+
+export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
+  const tileFrequency: TileFrequency = tiles.reduce((freq, tile) => {
+    freq[tile] = (freq[tile] ?? 0) + 1
+    return freq
+  }, {} as TileFrequency)
+
+  const results: Set<string> = new Set()
+
+  const backtrack = (combinations: number[][], hasPair: boolean) => {
+    // base case - if no tiles left and we have exactly 1 pair
+    const totalTiles = Object.values(tileFrequency).reduce(
+      (total, n) => (total += n),
+      0
+    )
+    if (totalTiles === 0 && hasPair) {
+      const sortedCombination = combinations
+        .map(combo => combo.slice().sort((a, b) => a - b))
+        .sort((a, b) => a[0] - b[0] || a.length - b.length)
+      results.add(JSON.stringify(sortedCombination))
+      return
+    }
+
+    // base case - we already have 5 melds
+    if (combinations.length === 5) return
+
+    // try forming a pair if we don't already have one
+    if (!hasPair) {
+      getTileFrequencyKeys(tileFrequency).forEach(tile => {
+        if (tileFrequency[tile] >= 2) {
+          // use available pair
+          tileFrequency[tile] -= 2
+          combinations.push([tile, tile])
+
+          //backtrack
+          backtrack(combinations, true)
+          combinations.pop()
+          tileFrequency[tile] += 2
+        }
+      })
+    }
+
+    // try forming quadruplets (kan)
+    getTileFrequencyKeys(tileFrequency).forEach(tile => {
+      if (tileFrequency[tile] >= 4) {
+        // use available quadruplet
+        tileFrequency[tile] -= 4
+        combinations.push([tile, tile, tile, tile])
+
+        //backtrack
+        backtrack(combinations, hasPair)
+        combinations.pop()
+        tileFrequency[tile] += 4
+      }
+    })
+
+    // try forming triplets (pon)
+    getTileFrequencyKeys(tileFrequency).forEach(tile => {
+      if (tileFrequency[tile] >= 3) {
+        // use available triplet
+        tileFrequency[tile] -= 3
+        combinations.push([tile, tile, tile])
+
+        //backtrack
+        backtrack(combinations, hasPair)
+        combinations.pop()
+        tileFrequency[tile] += 3
+      }
+    })
+
+    // try forming sequences (chi)
+    const uniqueTiles = getTileFrequencyKeys(tileFrequency)
+    const chiLength = 3
+    for (let i = 0; i < uniqueTiles.length - chiLength - 1; i++) {
+      const t1 = uniqueTiles[i]
+      const t2 = uniqueTiles[i + 1]
+      const t3 = uniqueTiles[i + 2]
+      const possibleChi: [number, number, number] = [t1, t2, t3]
+
+      if (
+        isValidChi(possibleChi) &&
+        tileFrequency[t1] > 0 &&
+        tileFrequency[t2] > 0 &&
+        tileFrequency[t3] > 0
+      ) {
+        //use available sequence
+        tileFrequency[t1]--
+        tileFrequency[t2]--
+        tileFrequency[t3]--
+        combinations.push(possibleChi)
+
+        //backtrack
+        backtrack(combinations, hasPair)
+        combinations.pop()
+        tileFrequency[t1]++
+        tileFrequency[t2]++
+        tileFrequency[t3]++
+      }
+    }
+  }
+
+  backtrack([], false)
+
+  return Array.from(results).map(combo => JSON.parse(combo))
+}
+
 export const calculateHand = (state: BoundState) => {
   const {
     tiles,
@@ -134,6 +262,7 @@ export const calculateHand = (state: BoundState) => {
     isRinshan,
   } = state
   const closedHand = tiles.map(convertStringTileToNumber)
+  const openHand: Array<{ open: boolean; tiles: number[] }> = []
   const akaDoraInHand = countAkaDora([...tiles, winningTile])
   const doraInHand = getDoraFromIndicators(dora)
   const winningTileNum = convertStringTileToNumber(winningTile)
@@ -145,7 +274,7 @@ export const calculateHand = (state: BoundState) => {
 
   const hand = new Riichi(
     closedHand,
-    [],
+    openHand,
     {
       bakaze: convertStringTileToNumber(roundWind),
       jikaze: convertStringTileToNumber(seatWind),
