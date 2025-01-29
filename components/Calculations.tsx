@@ -11,7 +11,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
 
   return results.map(
-    ({ error, yaku, han, ten, yakuman }, i) =>
+    ({ result: { error, yaku, han, ten, yakuman } }, i) =>
       !error &&
       ten > 0 &&
       (yakuman === 0 ? (

@@ -160,7 +160,7 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
     if (totalTiles === 0 && hasPair) {
       const sortedCombination = combinations
         .map(combo => combo.slice().sort((a, b) => a - b))
-        .sort((a, b) => a[0] - b[0] || a.length - b.length)
+        .sort((a, b) => b.length - a.length || a[0] - b[0])
       results.add(JSON.stringify(sortedCombination))
       return
     }
@@ -250,9 +250,12 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
     .sort((a, b) => a.length - b.length || a[0] - b[0])
 }
 
-export const calculateHand = (
-  state: BoundState
-): ReturnType<Riichi['calc']>[] => {
+type CalcData = {
+  hand: number[][]
+  result: ReturnType<Riichi['calc']>
+}
+
+export const calculateHand = (state: BoundState): CalcData[] => {
   const {
     tiles,
     roundWind,
@@ -285,7 +288,7 @@ export const calculateHand = (
   const akaDoraInHand = countAkaDora([...tiles, winningTile])
   const doraInHand = getDoraFromIndicators(dora)
   const winningTileNum = convertStringTileToNumber(winningTile)
-  const results: ReturnType<Riichi['calc']>[] = []
+  const results: CalcData[] = []
 
   for (let i = 0; i < allPossibleHands.length; i++) {
     const hand = allPossibleHands[i]
@@ -357,8 +360,11 @@ export const calculateHand = (
     )
 
     riichiHand.disableHairi()
-    results.push(riichiHand.calc())
+    results.push({
+      hand,
+      result: riichiHand.calc(),
+    })
   }
 
-  return results.sort((a, b) => b.ten - a.ten)
+  return results.sort((a, b) => b.result.ten - a.result.ten)
 }
