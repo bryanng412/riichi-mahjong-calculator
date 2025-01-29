@@ -270,8 +270,8 @@ export const calculateHand = (
   } = state
   const allTiles = [...tiles, winningTile].map(convertStringTileToNumber)
   if (
-    allTiles.length < MIN_HAND_SIZE ||
-    allTiles.length > MAX_HAND_SIZE ||
+    allTiles.length < MIN_HAND_SIZE + 1 ||
+    allTiles.length > MAX_HAND_SIZE + 1 ||
     winningTile === ''
   ) {
     return []
@@ -291,10 +291,12 @@ export const calculateHand = (
     const hand = allPossibleHands[i]
     let closedHand: number[] = []
     const openHand: { open: boolean; tiles: number[] }[] = []
-    const meldsWithWinningTile = hand.filter(meld =>
+    const kans = hand.filter(meld => meld.length === 4)
+    const meldsWithoutKans = hand.filter(meld => meld.length !== 4)
+    const meldsWithWinningTile = meldsWithoutKans.filter(meld =>
       meld.includes(winningTileNum)
     )
-    const meldsWithoutWinningTile = hand.filter(
+    const meldsWithoutWinningTile = meldsWithoutKans.filter(
       meld => !meld.includes(winningTileNum)
     )
 
@@ -308,6 +310,8 @@ export const calculateHand = (
         openHand.push({ open: true, tiles: openMeld })
       }
     }
+
+    kans.forEach(kan => openHand.push({ open: isHandOpen, tiles: kan }))
 
     const allMelds = [
       ...meldsWithWinningTile,
@@ -324,7 +328,6 @@ export const calculateHand = (
     }
 
     const ronTile = isTsumo ? undefined : winningTileNum
-
     const riichiHand = new Riichi(
       closedHand,
       openHand,

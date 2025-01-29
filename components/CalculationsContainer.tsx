@@ -8,7 +8,7 @@ const Calculations = lazy(() => import('./Calculations'))
 const CalculationsContainer = () => {
   const boundState = useBoundStore()
   const shouldShowCalcDataOnMount =
-    boundState.tiles.length === MIN_HAND_SIZE && boundState.winningTile !== ''
+    boundState.tiles.length >= MIN_HAND_SIZE && boundState.winningTile !== ''
   const [showCalcData, setShowCalcData] = useState(shouldShowCalcDataOnMount)
   const deferredCalcData = useDeferredValue(boundState)
 
@@ -18,10 +18,10 @@ const CalculationsContainer = () => {
       (currentState, prevState) => {
         const isLastTileToHand =
           prevState.tiles.length < MIN_HAND_SIZE &&
-          currentState.tiles.length === MIN_HAND_SIZE &&
+          currentState.tiles.length >= MIN_HAND_SIZE &&
           currentState.winningTile !== ''
         const isLastTileWinningTile =
-          currentState.tiles.length === MIN_HAND_SIZE &&
+          currentState.tiles.length >= MIN_HAND_SIZE &&
           prevState.winningTile === '' &&
           currentState.winningTile !== ''
         const isWinningTileChanging =
