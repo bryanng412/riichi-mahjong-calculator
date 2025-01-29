@@ -15,8 +15,8 @@ const initialYakuValues = {
 type YakuFlagNames = keyof typeof initialYakuValues
 
 type YakuActions = {
-  toggleYakuFlag: (yakuState: YakuFlagNames) => void
   setYakuFlag: (yakuState: YakuFlagNames, value: boolean) => void
+  resetYakuFlags: () => void
 }
 
 export type YakuSlice = typeof initialYakuValues & YakuActions
@@ -28,7 +28,6 @@ export const createYakuSlice: StateCreator<
   YakuSlice
 > = set => ({
   ...initialYakuValues,
-  toggleYakuFlag: yakuFlagName =>
-    set(state => ({ [yakuFlagName]: !state[yakuFlagName] })),
   setYakuFlag: (yakuFlagName, value) => set(() => ({ [yakuFlagName]: value })),
+  resetYakuFlags: () => set(() => initialYakuValues),
 })

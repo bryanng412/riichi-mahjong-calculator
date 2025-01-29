@@ -3,6 +3,7 @@
 import CalculationsContainer from '@/components/CalculationsContainer'
 import DoraIndicators from '@/components/DoraIndicators'
 import HandDisplay from '@/components/HandDisplay'
+import ResetButton from '@/components/ResetButton'
 import TileGrid from '@/components/TileGrid'
 import Winds from '@/components/Winds'
 import YakuOptions from '@/components/YakuOptions'
@@ -39,6 +40,7 @@ export default function Home() {
       <Winds />
       <YakuOptions />
       <TileGrid />
+      <ResetButton />
       <CalculationsContainer />
     </VStack>
   )
