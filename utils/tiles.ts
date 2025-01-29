@@ -292,30 +292,38 @@ export const calculateHand = (
     let closedHand: number[] = []
     const openHand: { open: boolean; tiles: number[] }[] = []
     const kans = hand.filter(meld => meld.length === 4)
-    const meldsWithoutKans = hand.filter(meld => meld.length !== 4)
-    const meldsWithWinningTile = meldsWithoutKans.filter(meld =>
-      meld.includes(winningTileNum)
+    const pair = hand.filter(meld => meld.length === 2)[0]
+    const meldsWithWinningTile = hand.filter(
+      meld => meld.includes(winningTileNum) && meld.length === 3
     )
-    const meldsWithoutWinningTile = meldsWithoutKans.filter(
-      meld => !meld.includes(winningTileNum)
+    let meldsWithoutWinningTile = hand.filter(
+      meld => !meld.includes(winningTileNum) && meld.length === 3
     )
 
+    // build open hand
     if (isHandOpen) {
-      const openMeldIndex = meldsWithoutWinningTile.findIndex(
-        meld => meld.length === 3
-      )
+      // might need for sanankou (3 closed triplets)
+      // const openMeldIndex = meldsWithoutWinningTile.findIndex(
+      //   meld => meld.length === 3
+      // )
 
-      if (openMeldIndex !== -1) {
-        const openMeld = meldsWithoutWinningTile.splice(openMeldIndex, 1)[0]
-        openHand.push({ open: true, tiles: openMeld })
-      }
+      // if (openMeldIndex !== -1) {
+      //   const openMeld = meldsWithoutWinningTile.splice(openMeldIndex, 1)[0]
+      //   openHand.push({ open: true, tiles: openMeld })
+      // }
+      meldsWithoutWinningTile.forEach(meld =>
+        openHand.push({ open: true, tiles: meld })
+      )
+      meldsWithoutWinningTile = []
     }
 
     kans.forEach(kan => openHand.push({ open: isHandOpen, tiles: kan }))
 
+    // build closed hand
     const allMelds = [
       ...meldsWithWinningTile,
       ...meldsWithoutWinningTile,
+      pair,
     ].flat()
 
     if (isTsumo) {
