@@ -1,7 +1,7 @@
 import { BoundState } from '@/store/boundStore'
 import { calculateHand, numberToPrefix } from '@/utils/tiles'
 import { Separator, Table, Text } from '@chakra-ui/react'
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 
 interface CalculationsProps {
   calcData: BoundState
@@ -11,11 +11,11 @@ const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
 
   return results.map(
-    ({ error, yaku, han, ten, yakuman }) =>
+    ({ error, yaku, han, ten, yakuman }, i) =>
       !error &&
       ten > 0 &&
       (yakuman === 0 ? (
-        <>
+        <Fragment key={i}>
           <Table.Root width={['100%', null, '60%']} size="lg" marginY="3">
             <Table.Header>
               <Table.Row>
@@ -42,9 +42,9 @@ const Calculations = ({ calcData }: CalculationsProps) => {
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
             {ten}
           </Text>
-        </>
+        </Fragment>
       ) : (
-        <>
+        <Fragment key={i}>
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
             Yakuman
           </Text>
@@ -68,7 +68,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
             {ten}
           </Text>
-        </>
+        </Fragment>
       ))
   )
 }
