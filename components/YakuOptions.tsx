@@ -6,7 +6,7 @@ const YakuOptions = () => {
   const {
     isRiichi,
     isIppatsu,
-    isMenzenTsumo,
+    isTsumo,
     isHandOpen,
     isHaiteiHotei,
     isRinshan,
@@ -44,9 +44,9 @@ const YakuOptions = () => {
       />
       <CheckboxCard
         label="Tsumo"
-        checked={isMenzenTsumo}
+        checked={isTsumo}
         inputProps={{
-          onClick: () => setYakuFlag('isMenzenTsumo', !isMenzenTsumo),
+          onClick: () => setYakuFlag('isTsumo', !isTsumo),
         }}
       />
       <CheckboxCard

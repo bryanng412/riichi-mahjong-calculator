@@ -1,8 +1,10 @@
 import { BoundState } from '@/store/boundStore'
 import { Wind } from '@/store/windSlice'
 import {
+  MAX_HAND_SIZE,
   MAX_NUMBER_OF_5_TILE,
   MAX_NUMBER_OF_SINGLE_TILE,
+  MIN_HAND_SIZE,
 } from '@/utils/constants'
 import { Riichi } from 'riichi-ts'
 
@@ -152,7 +154,7 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
   const backtrack = (combinations: number[][], hasPair: boolean) => {
     // base case - if no tiles left and we have exactly 1 pair
     const totalTiles = Object.values(tileFrequency).reduce(
-      (total, n) => (total += n),
+      (total, n) => total + n,
       0
     )
     if (totalTiles === 0 && hasPair) {
@@ -213,7 +215,7 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
     // try forming sequences (chi)
     const uniqueTiles = getTileFrequencyKeys(tileFrequency)
     const chiLength = 3
-    for (let i = 0; i < uniqueTiles.length - chiLength - 1; i++) {
+    for (let i = 0; i < uniqueTiles.length - chiLength + 1; i++) {
       const t1 = uniqueTiles[i]
       const t2 = uniqueTiles[i + 1]
       const t3 = uniqueTiles[i + 2]
@@ -243,16 +245,20 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
 
   backtrack([], false)
 
-  return Array.from(results).map(combo => JSON.parse(combo))
+  return Array.from(results)
+    .map(combo => JSON.parse(combo))
+    .sort((a, b) => a.length - b.length || a[0] - b[0])
 }
 
-export const calculateHand = (state: BoundState) => {
+export const calculateHand = (
+  state: BoundState
+): ReturnType<Riichi['calc']>[] => {
   const {
     tiles,
     roundWind,
     seatWind,
     dora,
-    isMenzenTsumo,
+    isTsumo,
     winningTile,
     isRiichi,
     isIppatsu,
@@ -260,39 +266,88 @@ export const calculateHand = (state: BoundState) => {
     isChankan,
     isHaiteiHotei,
     isRinshan,
+    isHandOpen,
   } = state
-  const closedHand = tiles.map(convertStringTileToNumber)
-  const openHand: Array<{ open: boolean; tiles: number[] }> = []
+  const allTiles = [...tiles, winningTile].map(convertStringTileToNumber)
+  if (
+    allTiles.length < MIN_HAND_SIZE ||
+    allTiles.length > MAX_HAND_SIZE ||
+    winningTile === ''
+  ) {
+    return []
+  }
+
+  const allPossibleHands = findAllMeldCombinations(allTiles)
+  if (allPossibleHands.length === 0) {
+    return []
+  }
+
   const akaDoraInHand = countAkaDora([...tiles, winningTile])
   const doraInHand = getDoraFromIndicators(dora)
   const winningTileNum = convertStringTileToNumber(winningTile)
-  const ronTile = isMenzenTsumo ? undefined : winningTileNum
+  const results: ReturnType<Riichi['calc']>[] = []
 
-  if (isMenzenTsumo) {
-    closedHand.push(winningTileNum)
+  for (let i = 0; i < allPossibleHands.length; i++) {
+    const hand = allPossibleHands[i]
+    let closedHand: number[] = []
+    const openHand: { open: boolean; tiles: number[] }[] = []
+    const meldsWithWinningTile = hand.filter(meld =>
+      meld.includes(winningTileNum)
+    )
+    const meldsWithoutWinningTile = hand.filter(
+      meld => !meld.includes(winningTileNum)
+    )
+
+    if (isHandOpen) {
+      const openMeldIndex = meldsWithoutWinningTile.findIndex(
+        meld => meld.length === 3
+      )
+
+      if (openMeldIndex !== -1) {
+        const openMeld = meldsWithoutWinningTile.splice(openMeldIndex, 1)[0]
+        openHand.push({ open: true, tiles: openMeld })
+      }
+    }
+
+    const allMelds = [
+      ...meldsWithWinningTile,
+      ...meldsWithoutWinningTile,
+    ].flat()
+
+    if (isTsumo) {
+      closedHand = allMelds
+        .filter(tile => tile !== winningTileNum)
+        .concat(allMelds.filter(tile => tile === winningTileNum))
+    } else {
+      allMelds.splice(allMelds.indexOf(winningTileNum), 1)
+      closedHand = allMelds
+    }
+
+    const ronTile = isTsumo ? undefined : winningTileNum
+
+    const riichiHand = new Riichi(
+      closedHand,
+      openHand,
+      {
+        bakaze: convertStringTileToNumber(roundWind),
+        jikaze: convertStringTileToNumber(seatWind),
+        dora: doraInHand,
+      },
+      ronTile,
+      false,
+      isRiichi,
+      isIppatsu,
+      isDoubleRiichi,
+      isHaiteiHotei,
+      isChankan || isRinshan,
+      akaDoraInHand,
+      true,
+      true
+    )
+
+    riichiHand.disableHairi()
+    results.push(riichiHand.calc())
   }
 
-  const hand = new Riichi(
-    closedHand,
-    openHand,
-    {
-      bakaze: convertStringTileToNumber(roundWind),
-      jikaze: convertStringTileToNumber(seatWind),
-      dora: doraInHand,
-    },
-    ronTile,
-    false,
-    isRiichi,
-    isIppatsu,
-    isDoubleRiichi,
-    isHaiteiHotei,
-    isChankan || isRinshan,
-    akaDoraInHand,
-    true,
-    true
-  )
-
-  hand.disableHairi()
-
-  return hand.calc()
+  return results.sort((a, b) => b.ten - a.ten)
 }
