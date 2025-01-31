@@ -25,11 +25,12 @@ const HandDisplay = () => {
   useEffect(() => {
     if (tiles.length >= MIN_HAND_SIZE) {
       setShowWinningTileField(true)
+      setActiveField(ActiveField.WinningTile)
     } else {
       setWinningTile('')
       setShowWinningTileField(false)
     }
-  }, [tiles.length, setWinningTile])
+  }, [tiles.length, setWinningTile, setActiveField])
 
   return (
     <Flex
