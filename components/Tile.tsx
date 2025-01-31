@@ -6,12 +6,14 @@ interface TileProps {
   tileId: string
   onClick?: React.MouseEventHandler<HTMLDivElement>
   showBorder?: boolean
+  isSmall?: boolean
 }
 
 const Tile = ({
   tileId,
   onClick,
   showBorder = false,
+  isSmall = false,
   ...rest
 }: TileProps & BoxProps) => {
   const imagePath = `/tiles/regular/${tileId}.svg`
@@ -38,14 +40,18 @@ const Tile = ({
       }
     : {}
 
+  const mobileWidth = isSmall ? 45 : 65
+  const padding = isSmall ? 1 : 2
+  const borderRadius = isSmall ? 'sm' : 'lg'
+
   return (
     <Box
-      width={[65, null, 100]}
+      width={[mobileWidth, null, 100]}
       maxW="sm"
       shadow="md"
-      borderRadius="lg"
-      padding="2"
-      margin="0.5"
+      borderRadius={borderRadius}
+      padding={padding}
+      margin=".5"
       backgroundColor="bg"
       {...buttonProps}
       {...borderProps}

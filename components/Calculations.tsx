@@ -3,6 +3,7 @@ import { calculateHand, numberToPrefix } from '@/utils/tiles'
 import { YakuInfo } from '@/utils/tooltips'
 import { Separator, Table, Text } from '@chakra-ui/react'
 import { Fragment, memo } from 'react'
+import CalculationTileDisplay from './CalculationTileDisplay'
 import { InfoTip } from './ui/toggle-tip'
 
 interface CalculationsProps {
@@ -13,7 +14,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
 
   return results.map(
-    ({ result: { error, yaku, han, ten, yakuman } }, i) =>
+    ({ result: { error, yaku, han, ten, yakuman }, hand }, i) =>
       !error &&
       ten > 0 &&
       (yakuman === 0 ? (
@@ -43,6 +44,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
               ))}
             </Table.Body>
           </Table.Root>
+          <CalculationTileDisplay hand={hand} />
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
             {han} Han
           </Text>
@@ -70,6 +72,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
             </Text>
           ))}
           <Separator size="md" width={['100%', null, '60%']} />
+          <CalculationTileDisplay hand={hand} />
           {yakuman > 1 && (
             <Text textStyle="xl" fontWeight="medium" textAlign="center">
               {numberToPrefix(yakuman)} Yakuman
