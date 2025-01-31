@@ -31,7 +31,7 @@ const Options = () => {
         <DialogCloseTrigger />
         <DialogHeader padding={6} paddingBottom={0} textAlign="center">
           <DialogTitle>
-            <Text>Hi there</Text>
+            <Text>Settings</Text>
           </DialogTitle>
         </DialogHeader>
         <DialogBody padding={6}>
