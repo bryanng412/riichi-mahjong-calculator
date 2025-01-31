@@ -1,22 +1,22 @@
 import { TILE_IMAGE_HEIGHT, TILE_IMAGE_WIDTH } from '@/utils/constants'
 import { Box, BoxProps } from '@chakra-ui/react'
 import Image from 'next/image'
+import { useColorMode } from './ui/color-mode'
 
 interface TileProps {
   tileId: string
   onClick?: React.MouseEventHandler<HTMLDivElement>
-  showBorder?: boolean
   isSmall?: boolean
 }
 
 const Tile = ({
   tileId,
   onClick,
-  showBorder = false,
   isSmall = false,
   ...rest
 }: TileProps & BoxProps) => {
-  const imagePath = `/tiles/regular/${tileId}.svg`
+  const { colorMode } = useColorMode()
+  const imagePath = `/tiles/${colorMode === 'light' ? 'regular' : 'dark'}/${tileId}.svg`
 
   const buttonProps: BoxProps = onClick
     ? {
@@ -33,13 +33,6 @@ const Tile = ({
       }
     : {}
 
-  const borderProps = showBorder
-    ? {
-        border: '1px solid',
-        borderColor: 'colorPalette.focusRing',
-      }
-    : {}
-
   const mobileWidth = isSmall ? 45 : 65
   const padding = isSmall ? 1 : 2
   const borderRadius = isSmall ? 'sm' : 'lg'
@@ -53,8 +46,9 @@ const Tile = ({
       padding={padding}
       margin=".5"
       backgroundColor="bg"
+      border="1px solid"
+      borderColor="colorPalette.muted"
       {...buttonProps}
-      {...borderProps}
       {...rest}
     >
       <Image

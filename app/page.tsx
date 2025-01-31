@@ -3,12 +3,13 @@
 import CalculationsContainer from '@/components/CalculationsContainer'
 import DoraIndicators from '@/components/DoraIndicators'
 import HandDisplay from '@/components/HandDisplay'
+import Options from '@/components/Options'
 import ResetButton from '@/components/ResetButton'
 import TileGrid from '@/components/TileGrid'
 import Winds from '@/components/Winds'
 import YakuOptions from '@/components/YakuOptions'
 import { useBoundStoreBase } from '@/store/boundStore'
-import { VStack } from '@chakra-ui/react'
+import { HStack, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
@@ -40,7 +41,15 @@ export default function Home() {
       <Winds />
       <YakuOptions />
       <TileGrid />
-      <ResetButton />
+      <HStack
+        justifyContent="space-around"
+        alignItems="center"
+        gap={[3, null, 10]}
+        marginTop={4}
+      >
+        <ResetButton />
+        <Options />
+      </HStack>
       <CalculationsContainer />
     </VStack>
   )

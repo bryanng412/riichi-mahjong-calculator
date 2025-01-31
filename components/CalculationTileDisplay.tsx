@@ -7,9 +7,13 @@ interface CalculationTileDisplayProps {
 
 const CalculationTileDisplay = ({ hand }: CalculationTileDisplayProps) => (
   <SimpleGrid
-    width={['100%', null, '50%']}
-    columns={hand.filter(meld => meld.length === 4).length > 0 ? 2 : 3}
-    gap={[2, null, 5]}
+    width={['100%', null, 'auto']}
+    columns={[
+      hand.filter(meld => meld.length === 4).length > 0 ? 2 : 3,
+      null,
+      5,
+    ]}
+    gap={[2, null, 3]}
   >
     {hand.map((meld, i) => (
       <HStack key={i} gap={0}>

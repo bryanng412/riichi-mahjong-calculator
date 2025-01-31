@@ -19,7 +19,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
       ten > 0 &&
       (yakuman === 0 ? (
         <Fragment key={i}>
-          <Table.Root width={['100%', null, '60%']} size="lg" marginY="3">
+          <Table.Root width={['100%', null, '70%']} size="lg" marginY="3">
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader fontWeight="semibold">

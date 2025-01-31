@@ -10,6 +10,7 @@ const WinningTile = () => {
   const getWinningTileOnClick: React.MouseEventHandler<HTMLDivElement> = e => {
     e.stopPropagation()
     setWinningTile('')
+    setActiveField(ActiveField.Hand)
   }
   const winningTileDisplayOnClick: React.MouseEventHandler<
     HTMLDivElement
