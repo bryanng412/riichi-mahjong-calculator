@@ -40,6 +40,27 @@ export const sortTiles = (tiles: string[]) =>
     return numA - numB
   })
 
+export const isThirteenOrphans = (tiles: number[]): boolean => {
+  const tileFrequency: { [tile: number]: number } = {}
+  const thirteenOrphanTiles = [0, 8, 9, 17, 18, 26, 27, 28, 29, 30, 31, 32, 33]
+  thirteenOrphanTiles.forEach(tile => {
+    tileFrequency[tile] = 0
+  })
+
+  tiles.forEach(tile => {
+    if (thirteenOrphanTiles.includes(tile)) {
+      tileFrequency[tile]++
+    }
+  })
+
+  const tileFrequencyValues = Object.values(tileFrequency)
+  return (
+    tileFrequencyValues.filter(count => count === 1).length === 12 &&
+    tileFrequencyValues.filter(count => count === 2).length === 1 &&
+    tileFrequencyValues.reduce((total, count) => total + count, 0) === 14
+  )
+}
+
 export const canAddTile = (tiles: string[], t: string): boolean => {
   const tilesUsed = tiles
     .filter(tile => tile !== '')
@@ -280,7 +301,9 @@ export const calculateHand = (state: BoundState): CalcData[] => {
     return []
   }
 
-  const allPossibleHands = findAllMeldCombinations(allTiles)
+  const allPossibleHands = isThirteenOrphans(allTiles)
+    ? [[allTiles]]
+    : findAllMeldCombinations(allTiles)
   if (allPossibleHands.length === 0) {
     return []
   }
@@ -338,7 +361,11 @@ export const calculateHand = (state: BoundState): CalcData[] => {
       closedHand = allMelds
     }
 
+    if (hand[0].length === 14) {
+      closedHand = isTsumo ? hand[0] : tiles.map(convertStringTileToNumber)
+    }
     const ronTile = isTsumo ? undefined : winningTileNum
+
     const riichiHand = new Riichi(
       closedHand,
       openHand,
