@@ -1,5 +1,5 @@
 import { BoundState } from '@/store/boundStore'
-import { calculateHand, numberToPrefix } from '@/utils/tiles'
+import { calculateHand, getHanName, numberToPrefix } from '@/utils/tiles'
 import { YakuInfo } from '@/utils/tooltips'
 import { Separator, Table, Text } from '@chakra-ui/react'
 import { Fragment, memo } from 'react'
@@ -14,7 +14,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
 
   return results.map(
-    ({ result: { error, yaku, han, ten, yakuman }, hand }, i) =>
+    ({ result: { error, yaku, han, ten, yakuman, fu }, hand }, i) =>
       !error &&
       ten > 0 &&
       (yakuman === 0 ? (
@@ -46,7 +46,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
           </Table.Root>
           <CalculationTileDisplay hand={hand} />
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
-            {han} Han
+            {han} Han - {getHanName(han, fu)}
           </Text>
           <Text textStyle="xl" fontWeight="medium" textAlign="center">
             {ten}

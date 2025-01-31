@@ -141,6 +141,22 @@ export const numberToPrefix = (n: number) => {
   return prefixes[n - 1] || `(${n}-tuple)`
 }
 
+export const getHanName = (han: number, fu: number): string => {
+  if (han >= 13) {
+    return 'Yakuman'
+  } else if (han >= 11) {
+    return 'Sanbaiman'
+  } else if (han >= 8) {
+    return 'Baiman'
+  } else if (han >= 6) {
+    return 'Haneman'
+  } else if (han === 5 || (han === 4 && fu >= 40) || (han === 3 && fu >= 70)) {
+    return 'Mangan'
+  } else {
+    return ''
+  }
+}
+
 type TileFrequency = { [tile: number]: number }
 
 export const getTileFrequencyKeys = (
