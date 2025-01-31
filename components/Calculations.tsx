@@ -1,7 +1,9 @@
 import { BoundState } from '@/store/boundStore'
 import { calculateHand, numberToPrefix } from '@/utils/tiles'
+import { YakuInfo } from '@/utils/tooltips'
 import { Separator, Table, Text } from '@chakra-ui/react'
 import { Fragment, memo } from 'react'
+import { InfoTip } from './ui/toggle-tip'
 
 interface CalculationsProps {
   calcData: BoundState
@@ -30,7 +32,12 @@ const Calculations = ({ calcData }: CalculationsProps) => {
             <Table.Body>
               {Object.keys(yaku).map((y, i) => (
                 <Table.Row key={`${y}-${i}`}>
-                  <Table.Cell>{y}</Table.Cell>
+                  <Table.Cell>
+                    {YakuInfo[y as keyof typeof YakuInfo].en}
+                    <InfoTip
+                      content={YakuInfo[y as keyof typeof YakuInfo].tooltipEN}
+                    />
+                  </Table.Cell>
                   <Table.Cell textAlign="end">{yaku[y]}</Table.Cell>
                 </Table.Row>
               ))}
@@ -56,7 +63,10 @@ const Calculations = ({ calcData }: CalculationsProps) => {
               fontWeight="medium"
               textAlign="center"
             >
-              {y}
+              {YakuInfo[y as keyof typeof YakuInfo].en}
+              <InfoTip
+                content={YakuInfo[y as keyof typeof YakuInfo].tooltipEN}
+              />
             </Text>
           ))}
           <Separator size="md" width={['100%', null, '60%']} />

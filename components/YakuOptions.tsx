@@ -1,6 +1,8 @@
 import { useBoundStore } from '@/store/boundStore'
-import { Flex } from '@chakra-ui/react'
+import { YakuInfo } from '@/utils/tooltips'
+import { Flex, Text } from '@chakra-ui/react'
 import { CheckboxCard } from './ui/checkbox-card'
+import { InfoTip } from './ui/toggle-tip'
 
 const YakuOptions = () => {
   const {
@@ -16,7 +18,11 @@ const YakuOptions = () => {
   return (
     <Flex gap={2} justifyContent="center" alignItems="center" wrap="wrap">
       <CheckboxCard
-        label="Riichi"
+        label={
+          <>
+            Riichi <InfoTip content={YakuInfo['riichi'].tooltipEN} />
+          </>
+        }
         checked={isRiichi}
         inputProps={{
           onClick: () => {
@@ -28,7 +34,11 @@ const YakuOptions = () => {
         }}
       />
       <CheckboxCard
-        label="Ippatsu"
+        label={
+          <>
+            Ippatsu <InfoTip content={YakuInfo['ippatsu'].tooltipEN} />
+          </>
+        }
         checked={isIppatsu}
         inputProps={{
           onClick: () => {
@@ -65,14 +75,42 @@ const YakuOptions = () => {
         }}
       />
       <CheckboxCard
-        label="Haitei/Hotei"
+        label={
+          <>
+            Haitei/Hotei
+            <InfoTip
+              content={
+                <>
+                  <Text>Haitei: {YakuInfo['haitei'].tooltipEN}</Text>
+                  <Text marginTop={2}>
+                    Houtei: {YakuInfo['houtei'].tooltipEN}
+                  </Text>
+                </>
+              }
+            />
+          </>
+        }
         checked={isHaiteiHotei}
         inputProps={{
           onClick: () => setYakuFlag('isHaiteiHotei', !isHaiteiHotei),
         }}
       />
       <CheckboxCard
-        label="Rinshan/Chankan"
+        label={
+          <>
+            Rinshan/Chankan
+            <InfoTip
+              content={
+                <>
+                  <Text>Rinshan: {YakuInfo['rinshan'].tooltipEN}</Text>
+                  <Text marginTop={2}>
+                    Chankan: {YakuInfo['chankan'].tooltipEN}
+                  </Text>
+                </>
+              }
+            />
+          </>
+        }
         checked={isRinshan}
         inputProps={{
           onClick: () => setYakuFlag('isRinshan', !isRinshan),
