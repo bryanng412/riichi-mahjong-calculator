@@ -1,6 +1,6 @@
 import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
-import { MIN_HAND_SIZE } from '@/utils/constants'
+import { MAX_HAND_SIZE, MIN_HAND_SIZE } from '@/utils/constants'
 import { Flex, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import Tile from './Tile'
@@ -25,7 +25,9 @@ const HandDisplay = () => {
   useEffect(() => {
     if (tiles.length >= MIN_HAND_SIZE) {
       setShowWinningTileField(true)
-      setActiveField(ActiveField.WinningTile)
+      if (tiles.length === MIN_HAND_SIZE || tiles.length === MAX_HAND_SIZE) {
+        setActiveField(ActiveField.WinningTile)
+      }
     } else {
       setWinningTile('')
       setShowWinningTileField(false)
