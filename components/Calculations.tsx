@@ -1,11 +1,11 @@
 import { BoundState, useBoundStore } from '@/store/boundStore'
+import { YakuInfo } from '@/utils/copy'
 import {
   calculateHand,
   getHanName,
   getHanScoringPoints,
   numberToPrefix,
 } from '@/utils/tiles'
-import { YakuInfo } from '@/utils/tooltips'
 import { Separator, Table, Text } from '@chakra-ui/react'
 import { Fragment, memo } from 'react'
 import CalculationTileDisplay from './CalculationTileDisplay'

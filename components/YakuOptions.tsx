@@ -1,5 +1,5 @@
 import { useBoundStore } from '@/store/boundStore'
-import { YakuInfo } from '@/utils/tooltips'
+import { YakuInfo } from '@/utils/copy'
 import { Flex, Text } from '@chakra-ui/react'
 import { CheckboxCard } from './ui/checkbox-card'
 import { InfoTip } from './ui/toggle-tip'

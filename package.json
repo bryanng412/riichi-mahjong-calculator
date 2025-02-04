@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write --ignore-path .gitignore ."
+    "format": "prettier --write --ignore-path .gitignore .",
+    "test": "vitest"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.4.0",
@@ -26,18 +27,24 @@
   "devDependencies": {
     "@chakra-ui/cli": "^3.5.1",
     "@redux-devtools/extension": "^3.3.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.2.0",
     "@types/lodash": "^4.17.14",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "husky": "^9.1.7",
+    "jsdom": "^26.0.0",
     "lint-staged": "^15.2.10",
     "mrm": "^4.1.22",
     "prettier": "3.4.1",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.0.5"
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
