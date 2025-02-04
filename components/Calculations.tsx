@@ -52,7 +52,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
               {han} Han{fu > 0 && ` ${fu} Fu`}
               {hanName && ` - ${hanName}`}
             </Text>
-            <Text textStyle="xl" fontWeight="medium" textAlign="center">
+            <Text textStyle="xl" fontWeight="bold" textAlign="center">
               {ten}
             </Text>
           </Fragment>
@@ -82,7 +82,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
                 {numberToPrefix(yakuman)} Yakuman
               </Text>
             )}
-            <Text textStyle="xl" fontWeight="medium" textAlign="center">
+            <Text textStyle="xl" fontWeight="bold" textAlign="center">
               {ten}
             </Text>
           </Fragment>
