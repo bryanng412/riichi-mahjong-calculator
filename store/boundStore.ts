@@ -9,6 +9,7 @@ import {
   createActiveFieldSlice,
 } from './activeFieldSlice'
 import { createDoraSlice, DoraSlice } from './doraSlice'
+import { createOptionsSlice, OptionsSlice } from './optionsSlice'
 import { createTileSlice, TileSlice } from './tileSlice'
 import { createWindSlice, WindSlice } from './windSlice'
 import { createYakuSlice, YakuSlice } from './yakuSlice'
@@ -17,7 +18,8 @@ export type BoundState = YakuSlice &
   DoraSlice &
   TileSlice &
   WindSlice &
-  ActiveFieldSlice
+  ActiveFieldSlice &
+  OptionsSlice
 
 export const useBoundStoreBase = create<BoundState>()(
   devtools(
@@ -29,6 +31,7 @@ export const useBoundStoreBase = create<BoundState>()(
           ...createTileSlice(...args),
           ...createWindSlice(...args),
           ...createActiveFieldSlice(...args),
+          ...createOptionsSlice(...args),
         })),
         {
           name: 'riichi-store',

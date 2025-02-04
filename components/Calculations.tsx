@@ -1,5 +1,10 @@
-import { BoundState } from '@/store/boundStore'
-import { calculateHand, getHanName, numberToPrefix } from '@/utils/tiles'
+import { BoundState, useBoundStore } from '@/store/boundStore'
+import {
+  calculateHand,
+  getHanName,
+  getHanScoringPoints,
+  numberToPrefix,
+} from '@/utils/tiles'
 import { YakuInfo } from '@/utils/tooltips'
 import { Separator, Table, Text } from '@chakra-ui/react'
 import { Fragment, memo } from 'react'
@@ -12,10 +17,13 @@ interface CalculationsProps {
 
 const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
+  const { showJapaneseYakuNames, showHanScoring, seatWind } = useBoundStore()
+  const isDealer = seatWind === '27'
 
   return results.map(
     ({ result: { error, yaku, han, ten, yakuman, fu }, hand }, i) => {
       const hanName = getHanName(han, fu)
+      const points = showHanScoring ? getHanScoringPoints(han, isDealer) : ten
 
       return (
         !error &&
@@ -37,7 +45,9 @@ const Calculations = ({ calcData }: CalculationsProps) => {
                 {Object.keys(yaku).map((y, i) => (
                   <Table.Row key={`${y}-${i}`}>
                     <Table.Cell>
-                      {YakuInfo[y as keyof typeof YakuInfo].en}
+                      {showJapaneseYakuNames
+                        ? YakuInfo[y as keyof typeof YakuInfo].ja
+                        : YakuInfo[y as keyof typeof YakuInfo].en}
                       <InfoTip
                         content={YakuInfo[y as keyof typeof YakuInfo].tooltipEN}
                       />
@@ -49,11 +59,11 @@ const Calculations = ({ calcData }: CalculationsProps) => {
             </Table.Root>
             <CalculationTileDisplay hand={hand} />
             <Text textStyle="xl" fontWeight="medium" textAlign="center">
-              {han} Han{fu > 0 && ` ${fu} Fu`}
+              {han} Han{fu > 0 && !showHanScoring && ` ${fu} Fu`}
               {hanName && ` - ${hanName}`}
             </Text>
             <Text textStyle="xl" fontWeight="bold" textAlign="center">
-              {ten}
+              {points}
             </Text>
           </Fragment>
         ) : (
@@ -69,7 +79,9 @@ const Calculations = ({ calcData }: CalculationsProps) => {
                 fontWeight="medium"
                 textAlign="center"
               >
-                {YakuInfo[y as keyof typeof YakuInfo].en}
+                {showJapaneseYakuNames
+                  ? YakuInfo[y as keyof typeof YakuInfo].ja
+                  : YakuInfo[y as keyof typeof YakuInfo].en}
                 <InfoTip
                   content={YakuInfo[y as keyof typeof YakuInfo].tooltipEN}
                 />

@@ -157,6 +157,31 @@ export const getHanName = (han: number, fu: number): string => {
   }
 }
 
+export const getHanScoringPoints = (han: number, isDealer: boolean): number => {
+  const base = 1000
+  let points = 0
+
+  if (han > 0 && han < 4) {
+    points += 2 ** (han - 1) * base
+  } else if (han < 6) {
+    points += 8000
+  } else if (han < 8) {
+    points += 12000
+  } else if (han < 11) {
+    points += 16000
+  } else if (han < 13) {
+    points += 24000
+  } else {
+    points += 32000
+  }
+
+  if (isDealer) {
+    points = points * 1.5
+  }
+
+  return points
+}
+
 export const getSevenPairs = (tiles: number[]): number[][] | null => {
   if (tiles.length !== 14) return null // Must be exactly 14 tiles
 
