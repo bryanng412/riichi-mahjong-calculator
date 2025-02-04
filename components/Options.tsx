@@ -11,21 +11,25 @@ import {
 } from '@/components/ui/dialog'
 import { Switch } from '@/components/ui/switch'
 import { useBoundStore } from '@/store/boundStore'
+import { OptionsNames } from '@/store/optionsSlice'
 import { IconButton, Text, VStack } from '@chakra-ui/react'
 import { FaGear } from 'react-icons/fa6'
 import { InfoTip } from './ui/toggle-tip'
 
 const Options = () => {
-  const { showHanScoring, showJapaneseYakuNames, setOptionsValue } =
-    useBoundStore()
+  const {
+    showHanScoring,
+    showJapaneseYakuNames,
+    showNumberOfTilesInHand,
+    setOptionsValue,
+  } = useBoundStore()
 
-  const showOnScoringOnChange: React.ComponentProps<
-    typeof Switch
-  >['onCheckedChange'] = e => setOptionsValue('showHanScoring', e.checked)
-  const showJapaneseYakuNamesOnChange: React.ComponentProps<
-    typeof Switch
-  >['onCheckedChange'] = e =>
-    setOptionsValue('showJapaneseYakuNames', e.checked)
+  const getOptionsOnChange =
+    (
+      option: OptionsNames
+    ): React.ComponentProps<typeof Switch>['onCheckedChange'] =>
+    e =>
+      setOptionsValue(option, e.checked)
 
   return (
     <DialogRoot placement="center">
@@ -53,7 +57,7 @@ const Options = () => {
             <ColorModeButton />
             <Switch
               checked={showHanScoring}
-              onCheckedChange={showOnScoringOnChange}
+              onCheckedChange={getOptionsOnChange('showHanScoring')}
             >
               Use Han Scoring
               <InfoTip
@@ -64,9 +68,15 @@ const Options = () => {
             </Switch>
             <Switch
               checked={showJapaneseYakuNames}
-              onCheckedChange={showJapaneseYakuNamesOnChange}
+              onCheckedChange={getOptionsOnChange('showJapaneseYakuNames')}
             >
               Use Japanese Yaku names
+            </Switch>
+            <Switch
+              checked={showNumberOfTilesInHand}
+              onCheckedChange={getOptionsOnChange('showNumberOfTilesInHand')}
+            >
+              Show number of tiles in hand
             </Switch>
           </VStack>
         </DialogBody>

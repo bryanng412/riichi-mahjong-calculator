@@ -5,9 +5,10 @@ const initialOptionsValues = {
   showHanScoring: false,
   showJapaneseYakuNames: false,
   showTileHelpers: false,
+  showNumberOfTilesInHand: true,
 }
 
-type OptionsNames = keyof typeof initialOptionsValues
+export type OptionsNames = keyof typeof initialOptionsValues
 
 type OptionsActions = {
   setOptionsValue: (yakuState: OptionsNames, value: boolean) => void

@@ -7,8 +7,16 @@ import Tile from './Tile'
 import WinningTile from './WinningTile'
 
 const HandDisplay = () => {
-  const { setActiveField, tiles, removeTile, activeField, setWinningTile } =
-    useBoundStore()
+  const {
+    setActiveField,
+    tiles,
+    removeTile,
+    activeField,
+    setWinningTile,
+    showNumberOfTilesInHand,
+    winningTile,
+  } = useBoundStore()
+  const numberOfTilesInHand = winningTile ? tiles.length + 1 : tiles.length
   const [showWinningTileField, setShowWinningTileField] = useState(
     tiles.length >= MIN_HAND_SIZE
   )
@@ -45,7 +53,7 @@ const HandDisplay = () => {
       zIndex={1}
     >
       <Text backgroundColor="bg" width="100%" textAlign="center">
-        Hand
+        Hand{showNumberOfTilesInHand && ` (${numberOfTilesInHand})`}
       </Text>
       <Flex
         width="100%"
