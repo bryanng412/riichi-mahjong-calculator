@@ -58,7 +58,7 @@ const HandDisplay = () => {
       <Flex
         width="100%"
         backgroundColor="bg"
-        minHeight={[100, null, 170]}
+        minHeight={[120, null, 170]}
         borderWidth="2px"
         borderRadius="sm"
         paddingX="3"
