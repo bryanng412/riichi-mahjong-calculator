@@ -37,10 +37,10 @@ export default function Home() {
   return (
     <VStack padding="2" height="100vh" paddingBottom="15%" overflow="auto">
       <HandDisplay />
+      <TileGrid />
       <DoraIndicators />
       <Winds />
       <YakuOptions />
-      <TileGrid />
       <HStack
         justifyContent="space-around"
         alignItems="center"
