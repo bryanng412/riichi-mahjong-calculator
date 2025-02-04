@@ -374,7 +374,8 @@ export const calculateHand = (state: BoundState): CalcData[] => {
   const winningTileNum = convertStringTileToNumber(winningTile)
   const results: CalcData[] = []
 
-  if (isThirteenOrphans(allTiles) || getSevenPairs(allTiles)) {
+  const sevenPairHand = getSevenPairs(allTiles)
+  if (isThirteenOrphans(allTiles) || sevenPairHand) {
     const closedHand = allTiles.slice()
     moveToEndInPlace(closedHand, winningTileNum)
     if (!isTsumo) {
@@ -405,7 +406,7 @@ export const calculateHand = (state: BoundState): CalcData[] => {
 
     return [
       {
-        hand: [],
+        hand: sevenPairHand || [allTiles],
         result: specialHand.calc(),
       },
     ]
