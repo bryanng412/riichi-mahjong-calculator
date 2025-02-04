@@ -157,6 +157,22 @@ export const getHanName = (han: number, fu: number): string => {
   }
 }
 
+export const getSevenPairs = (tiles: number[]): number[][] | null => {
+  if (tiles.length !== 14) return null // Must be exactly 14 tiles
+
+  const tileFrequency: { [tile: number]: number } = {}
+
+  for (const tile of tiles) {
+    tileFrequency[tile] = (tileFrequency[tile] || 0) + 1
+  }
+
+  const pairs = Object.keys(tileFrequency)
+    .filter(tile => tileFrequency[parseInt(tile)] === 2)
+    .map(tile => [parseInt(tile), parseInt(tile)])
+
+  return pairs.length === 7 ? pairs : null
+}
+
 type TileFrequency = { [tile: number]: number }
 
 export const getTileFrequencyKeys = (
@@ -287,6 +303,17 @@ export const findAllMeldCombinations = (tiles: number[]): number[][][] => {
     .sort((a, b) => a.length - b.length || a[0] - b[0])
 }
 
+const moveToEndInPlace = (hand: number[], tile: number): void => {
+  let writeIndex = 0
+
+  for (let i = 0; i < hand.length; i++) {
+    if (hand[i] !== tile) {
+      ;[hand[writeIndex], hand[i]] = [hand[i], hand[writeIndex]]
+      writeIndex++
+    }
+  }
+}
+
 type CalcData = {
   hand: number[][]
   result: ReturnType<Riichi['calc']>
@@ -317,68 +344,91 @@ export const calculateHand = (state: BoundState): CalcData[] => {
     return []
   }
 
-  const allPossibleHands = isThirteenOrphans(allTiles)
-    ? [[allTiles]]
-    : findAllMeldCombinations(allTiles)
-  if (allPossibleHands.length === 0) {
-    return []
-  }
-
   const akaDoraInHand = countAkaDora([...tiles, winningTile])
   const doraInHand = getDoraFromIndicators(dora)
   const winningTileNum = convertStringTileToNumber(winningTile)
   const results: CalcData[] = []
 
+  if (isThirteenOrphans(allTiles) || getSevenPairs(allTiles)) {
+    const closedHand = allTiles.slice()
+    moveToEndInPlace(closedHand, winningTileNum)
+    if (!isTsumo) {
+      closedHand.pop()
+    }
+    const ronTile = isTsumo ? undefined : winningTileNum
+
+    const specialHand = new Riichi(
+      closedHand,
+      [],
+      {
+        bakaze: convertStringTileToNumber(roundWind),
+        jikaze: convertStringTileToNumber(seatWind),
+        dora: doraInHand,
+      },
+      ronTile,
+      false,
+      isRiichi,
+      isIppatsu,
+      isDoubleRiichi,
+      isHaiteiHotei,
+      isChankan || isRinshan,
+      akaDoraInHand,
+      true,
+      true
+    )
+    specialHand.disableHairi()
+
+    return [
+      {
+        hand: [],
+        result: specialHand.calc(),
+      },
+    ]
+  }
+
+  const allPossibleHands = findAllMeldCombinations(allTiles)
+  if (allPossibleHands.length === 0) {
+    return []
+  }
+
   for (let i = 0; i < allPossibleHands.length; i++) {
     const hand = allPossibleHands[i]
-    let closedHand: number[] = []
+    const closedHand: number[] = []
     const openHand: { open: boolean; tiles: number[] }[] = []
     const kans = hand.filter(meld => meld.length === 4)
     const pair = hand.filter(meld => meld.length === 2)[0]
     const meldsWithWinningTile = hand.filter(
       meld => meld.includes(winningTileNum) && meld.length === 3
     )
-    let meldsWithoutWinningTile = hand.filter(
+    const meldsWithoutWinningTile = hand.filter(
       meld => !meld.includes(winningTileNum) && meld.length === 3
     )
 
-    // build open hand
-    if (isHandOpen) {
-      // might need for sanankou (3 closed triplets)
-      // const openMeldIndex = meldsWithoutWinningTile.findIndex(
-      //   meld => meld.length === 3
-      // )
+    // add pair and kans to hand
+    pair.forEach(tile => closedHand.push(tile))
+    kans.forEach(kan => openHand.push({ open: isHandOpen, tiles: kan }))
 
-      // if (openMeldIndex !== -1) {
-      //   const openMeld = meldsWithoutWinningTile.splice(openMeldIndex, 1)[0]
-      //   openHand.push({ open: true, tiles: openMeld })
-      // }
+    // add melds without winning tile
+    if (isHandOpen) {
       meldsWithoutWinningTile.forEach(meld =>
         openHand.push({ open: true, tiles: meld })
       )
-      meldsWithoutWinningTile = []
-    }
-
-    kans.forEach(kan => openHand.push({ open: isHandOpen, tiles: kan }))
-
-    // build closed hand
-    const allMelds = [
-      ...meldsWithWinningTile,
-      ...meldsWithoutWinningTile,
-      pair,
-    ].flat()
-
-    if (isTsumo) {
-      closedHand = allMelds
-        .filter(tile => tile !== winningTileNum)
-        .concat(allMelds.filter(tile => tile === winningTileNum))
     } else {
-      allMelds.splice(allMelds.indexOf(winningTileNum), 1)
-      closedHand = allMelds
+      meldsWithoutWinningTile.forEach(meld =>
+        meld.forEach(tile => closedHand.push(tile))
+      )
     }
 
-    if (hand[0].length === 14) {
-      closedHand = isTsumo ? hand[0] : tiles.map(convertStringTileToNumber)
+    // add melds with winning tile
+    meldsWithWinningTile.forEach(meld =>
+      meld.forEach(tile => closedHand.push(tile))
+    )
+
+    // if ron, set winning tile and remove it from closed hand
+    // if tsumo, set ron tile to undefined
+    moveToEndInPlace(closedHand, winningTileNum)
+    if (!isTsumo) {
+      closedHand.pop()
     }
     const ronTile = isTsumo ? undefined : winningTileNum
 
