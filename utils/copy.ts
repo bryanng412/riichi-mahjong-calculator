@@ -355,3 +355,235 @@ export const YakuInfo = {
     tooltipJA: '',
   },
 }
+
+export const TileInfo: {
+  [tileId: string]: {
+    enName: string
+    jaName: string
+    helperName: string
+    numberValue: number
+  }
+} = {
+  '0': {
+    enName: '1 Man',
+    jaName: '1 萬',
+    helperName: '1',
+    numberValue: 0,
+  },
+  '1': {
+    enName: '2 Man',
+    jaName: '2 萬',
+    helperName: '2',
+    numberValue: 1,
+  },
+  '2': {
+    enName: '3 Man',
+    jaName: '3 萬',
+    helperName: '3',
+    numberValue: 2,
+  },
+  '3': {
+    enName: '4 Man',
+    jaName: '4 萬',
+    helperName: '4',
+    numberValue: 3,
+  },
+  '4': {
+    enName: '5 Man',
+    jaName: '5 萬',
+    helperName: '5',
+    numberValue: 4,
+  },
+  '4-dora': {
+    enName: 'red 5 Man',
+    jaName: '赤 5 萬',
+    helperName: '5',
+    numberValue: 4,
+  },
+  '5': {
+    enName: '6 Man',
+    jaName: '6 萬',
+    helperName: '6',
+    numberValue: 5,
+  },
+  '6': {
+    enName: '7 Man',
+    jaName: '7 萬',
+    helperName: '7',
+    numberValue: 6,
+  },
+  '7': {
+    enName: '8 Man',
+    jaName: '8 萬',
+    helperName: '8',
+    numberValue: 7,
+  },
+  '8': {
+    enName: '9 Man',
+    jaName: '9 萬',
+    helperName: '9',
+    numberValue: 8,
+  },
+  '9': {
+    enName: '1 Pin',
+    jaName: '1 筒',
+    helperName: '1',
+    numberValue: 9,
+  },
+  '10': {
+    enName: '2 Pin',
+    jaName: '2 筒',
+    helperName: '2',
+    numberValue: 10,
+  },
+  '11': {
+    enName: '3 Pin',
+    jaName: '3 筒',
+    helperName: '3',
+    numberValue: 11,
+  },
+  '12': {
+    enName: '4 Pin',
+    jaName: '4 筒',
+    helperName: '4',
+    numberValue: 12,
+  },
+  '13': {
+    enName: '5 Pin',
+    jaName: '5 筒',
+    helperName: '5',
+    numberValue: 13,
+  },
+  '13-dora': {
+    enName: 'red 5 Pin',
+    jaName: '赤 5 筒',
+    helperName: '5',
+    numberValue: 13,
+  },
+  '14': {
+    enName: '6 Pin',
+    jaName: '6 筒',
+    helperName: '6',
+    numberValue: 14,
+  },
+  '15': {
+    enName: '7 Pin',
+    jaName: '7 筒',
+    helperName: '7',
+    numberValue: 15,
+  },
+  '16': {
+    enName: '8 Pin',
+    jaName: '8 筒',
+    helperName: '8',
+    numberValue: 16,
+  },
+  '17': {
+    enName: '9 Pin',
+    jaName: '9 筒',
+    helperName: '9',
+    numberValue: 17,
+  },
+  '18': {
+    enName: '1 Sou',
+    jaName: '1 索',
+    helperName: '1',
+    numberValue: 18,
+  },
+  '19': {
+    enName: '2 Sou',
+    jaName: '2 索',
+    helperName: '2',
+    numberValue: 19,
+  },
+  '20': {
+    enName: '3 Sou',
+    jaName: '3 索',
+    helperName: '3',
+    numberValue: 20,
+  },
+  '21': {
+    enName: '4 Sou',
+    jaName: '4 索',
+    helperName: '4',
+    numberValue: 21,
+  },
+  '22': {
+    enName: '5 Sou',
+    jaName: '5 索',
+    helperName: '5',
+    numberValue: 22,
+  },
+  '22-dora': {
+    enName: 'red 5 Sou',
+    jaName: '赤 5 索',
+    helperName: '5',
+    numberValue: 22,
+  },
+  '23': {
+    enName: '6 Sou',
+    jaName: '6 索',
+    helperName: '6',
+    numberValue: 23,
+  },
+  '24': {
+    enName: '7 Sou',
+    jaName: '7 索',
+    helperName: '7',
+    numberValue: 24,
+  },
+  '25': {
+    enName: '8 Sou',
+    jaName: '8 索',
+    helperName: '8',
+    numberValue: 25,
+  },
+  '26': {
+    enName: '9 Sou',
+    jaName: '9 索',
+    helperName: '9',
+    numberValue: 26,
+  },
+  '27': {
+    enName: 'East Wind',
+    jaName: '東',
+    helperName: 'E',
+    numberValue: 27,
+  },
+  '28': {
+    enName: 'South Wind',
+    jaName: '南',
+    helperName: 'S',
+    numberValue: 28,
+  },
+  '29': {
+    enName: 'West Wind',
+    jaName: '西',
+    helperName: 'W',
+    numberValue: 29,
+  },
+  '30': {
+    enName: 'North Wind',
+    jaName: '北',
+    helperName: 'N',
+    numberValue: 30,
+  },
+  '31': {
+    enName: 'White Dragon',
+    jaName: '白',
+    helperName: 'Wh',
+    numberValue: 31,
+  },
+  '32': {
+    enName: 'Green Dragon',
+    jaName: '發',
+    helperName: 'G',
+    numberValue: 32,
+  },
+  '33': {
+    enName: 'Red Dragon',
+    jaName: '中',
+    helperName: 'R',
+    numberValue: 33,
+  },
+}

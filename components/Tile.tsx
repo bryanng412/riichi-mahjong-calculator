@@ -1,5 +1,7 @@
+import { useBoundStore } from '@/store/boundStore'
 import { TILE_IMAGE_HEIGHT, TILE_IMAGE_WIDTH } from '@/utils/constants'
-import { Box, BoxProps } from '@chakra-ui/react'
+import { TileInfo } from '@/utils/copy'
+import { Box, BoxProps, Text } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useColorMode } from './ui/color-mode'
 
@@ -16,7 +18,12 @@ const Tile = ({
   ...rest
 }: TileProps & BoxProps) => {
   const { colorMode } = useColorMode()
+  const { showJapaneseYakuNames, showTileHelpers } = useBoundStore()
   const imagePath = `/tiles/${colorMode === 'light' ? 'regular' : 'dark'}/${tileId}.svg`
+  const altText = showJapaneseYakuNames
+    ? TileInfo[tileId].jaName
+    : TileInfo[tileId].enName
+  const tileHelper = TileInfo[tileId].helperName
 
   const buttonProps: BoxProps = onClick
     ? {
@@ -48,16 +55,32 @@ const Tile = ({
       backgroundColor="bg"
       border="1px solid"
       borderColor="colorPalette.muted"
+      position="relative"
       {...buttonProps}
       {...rest}
     >
       <Image
         src={imagePath}
-        alt="tile"
+        alt={altText}
         width={TILE_IMAGE_WIDTH}
         height={TILE_IMAGE_HEIGHT}
         draggable="false"
       />
+      {showTileHelpers && (
+        <Text
+          display="inline"
+          backgroundColor="colorPalette.subtle"
+          color="colorPalette.solid"
+          fontSize={['xs', null, 'md']}
+          fontWeight="semibold"
+          position="absolute"
+          top="8px"
+          right="8px"
+          lineHeight="1"
+        >
+          {tileHelper}
+        </Text>
+      )}
     </Box>
   )
 }

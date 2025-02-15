@@ -21,6 +21,7 @@ const Options = () => {
     showHanScoring,
     showJapaneseYakuNames,
     showNumberOfTilesInHand,
+    showTileHelpers,
     setOptionsValue,
   } = useBoundStore()
 
@@ -77,6 +78,12 @@ const Options = () => {
               onCheckedChange={getOptionsOnChange('showNumberOfTilesInHand')}
             >
               Show number of tiles in hand
+            </Switch>
+            <Switch
+              checked={showTileHelpers}
+              onCheckedChange={getOptionsOnChange('showTileHelpers')}
+            >
+              Show tile helpers
             </Switch>
           </VStack>
         </DialogBody>
