@@ -157,6 +157,19 @@ export const getHanName = (han: number, fu: number): string => {
   }
 }
 
+export const getOyaKoPoints = (
+  outgoingTen: { oya: number; ko: number },
+  isDealer: boolean
+) => {
+  const { oya, ko } = outgoingTen
+
+  if (isDealer) {
+    return `${oya} All`
+  } else {
+    return `${ko} / ${oya}`
+  }
+}
+
 export const getHanScoringPoints = (han: number, isDealer: boolean): number => {
   const base = 1000
   let points = 0

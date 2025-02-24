@@ -4,6 +4,7 @@ import {
   calculateHand,
   getHanName,
   getHanScoringPoints,
+  getOyaKoPoints,
   numberToPrefix,
 } from '@/utils/tiles'
 import { Separator, Table, Text } from '@chakra-ui/react'
@@ -17,13 +18,18 @@ interface CalculationsProps {
 
 const Calculations = ({ calcData }: CalculationsProps) => {
   const results = calculateHand(calcData)
-  const { showJapaneseYakuNames, showHanScoring, seatWind } = useBoundStore()
+  const { showJapaneseYakuNames, showHanScoring, seatWind, isTsumo } =
+    useBoundStore()
   const isDealer = seatWind === '27'
 
   return results.map(
-    ({ result: { error, yaku, han, ten, yakuman, fu }, hand }, i) => {
+    (
+      { result: { error, yaku, han, ten, yakuman, fu, outgoingTen }, hand },
+      i
+    ) => {
       const hanName = getHanName(han, fu)
       const points = showHanScoring ? getHanScoringPoints(han, isDealer) : ten
+      const showOyaKo = isTsumo && outgoingTen
 
       return (
         !error &&
@@ -65,6 +71,11 @@ const Calculations = ({ calcData }: CalculationsProps) => {
             <Text textStyle="xl" fontWeight="bold" textAlign="center">
               {points}
             </Text>
+            {showOyaKo && (
+              <Text textStyle="xl" fontWeight="bold" textAlign="center">
+                {getOyaKoPoints(outgoingTen, isDealer)}
+              </Text>
+            )}
           </Fragment>
         ) : (
           <Fragment key={i}>
@@ -97,6 +108,11 @@ const Calculations = ({ calcData }: CalculationsProps) => {
             <Text textStyle="xl" fontWeight="bold" textAlign="center">
               {ten}
             </Text>
+            {showOyaKo && (
+              <Text textStyle="xl" fontWeight="bold" textAlign="center">
+                {getOyaKoPoints(outgoingTen, isDealer)}
+              </Text>
+            )}
           </Fragment>
         ))
       )
