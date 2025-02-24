@@ -1,8 +1,7 @@
 import { ActiveField } from '@/store/activeFieldSlice'
 import { useBoundStore } from '@/store/boundStore'
-import { MAX_HAND_SIZE, MIN_HAND_SIZE } from '@/utils/constants'
+import { MIN_HAND_SIZE } from '@/utils/constants'
 import { Flex, Text } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
 import Tile from './Tile'
 import WinningTile from './WinningTile'
 
@@ -12,14 +11,11 @@ const HandDisplay = () => {
     tiles,
     removeTile,
     activeField,
-    setWinningTile,
     showNumberOfTilesInHand,
     winningTile,
   } = useBoundStore()
   const numberOfTilesInHand = winningTile ? tiles.length + 1 : tiles.length
-  const [showWinningTileField, setShowWinningTileField] = useState(
-    tiles.length >= MIN_HAND_SIZE
-  )
+  const showWinningTileField = tiles.length >= MIN_HAND_SIZE
   const getHandTileOnClick = (i: number) => () => {
     removeTile(i)
     setActiveField(ActiveField.Hand)
@@ -29,18 +25,6 @@ const HandDisplay = () => {
     activeField === ActiveField.Hand
       ? 'colorPalette.focusRing'
       : 'colorPalette.border'
-
-  useEffect(() => {
-    if (tiles.length >= MIN_HAND_SIZE) {
-      setShowWinningTileField(true)
-      if (tiles.length === MIN_HAND_SIZE || tiles.length === MAX_HAND_SIZE) {
-        setActiveField(ActiveField.WinningTile)
-      }
-    } else {
-      setWinningTile('')
-      setShowWinningTileField(false)
-    }
-  }, [tiles.length, setWinningTile, setActiveField])
 
   return (
     <Flex
