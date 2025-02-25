@@ -29,7 +29,7 @@ const Calculations = ({ calcData }: CalculationsProps) => {
     ) => {
       const hanName = getHanName(han, fu)
       const points = showHanScoring ? getHanScoringPoints(han, isDealer) : ten
-      const showOyaKo = isTsumo && outgoingTen
+      const showOyaKo = isTsumo && outgoingTen && !showHanScoring
 
       return (
         !error &&
