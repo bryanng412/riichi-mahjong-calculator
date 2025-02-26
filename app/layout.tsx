@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import Provider from './provider'
@@ -17,6 +17,12 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: 'Riichi Mahjong Calculator',
   description: 'A Japanese Mahjong Calculator',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({
